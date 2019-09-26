@@ -1,0 +1,27 @@
+{
+  "devDependencies": {
+    "pug": "^2.0.4",
+    "sass": "^1.22.12"
+  },
+  "name": "soul-sword",
+  "description": "A web based RPG",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnDinhCodes/soul-sword.git"
+  },
+  "keywords": [
+    "rpg"
+  ],
+  "author": "John Dinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohnDinhCodes/soul-sword/issues"
+  },
+  "homepage": "https://github.com/JohnDinhCodes/soul-sword#readme"
+}

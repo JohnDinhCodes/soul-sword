@@ -1,0 +1,13 @@
+body {
+    background-color: #2D0320;
+}
+
+.game {
+    background-color: gray;
+    height: 80vh;
+    width: 70vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
