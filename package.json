@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "pug": "^2.0.4",
     "sass": "^1.22.12"
   },
@@ -9,6 +10,7 @@
   "main": "index.js",
   "dependencies": {},
   "scripts": {
+    "clean": "rm -rf ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
