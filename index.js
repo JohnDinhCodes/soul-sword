@@ -11,7 +11,6 @@ const music = createWindow.querySelector("audio");
 const form = createWindow.querySelector(".creation__input-form");
 
 let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter"));
-
 startBtn.addEventListener("click", e => {
     music.play();
     startWindow.style.display = "none";

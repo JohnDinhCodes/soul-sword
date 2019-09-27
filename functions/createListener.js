@@ -5,7 +5,7 @@ function createListener(e) {
     const name = this.querySelector("input").value;
     this.querySelector("input").value = "";
     localStorage.setItem("MainCharacter", JSON.stringify(new CharacterCreation({ name })));
-    location.reload();
+    this.parentElement.style.display = "none";
 }
 
 module.exports = createListener;
