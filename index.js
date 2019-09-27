@@ -12,21 +12,15 @@ const form = createWindow.querySelector(".creation__input-form");
 
 let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter"));
 
-
-
-if (!MainCharacter) {
-    startBtn.addEventListener("click", e => {
-        music.play();
-        startWindow.style.display = "none";
+startBtn.addEventListener("click", e => {
+    music.play();
+    startWindow.style.display = "none";
+    if (!MainCharacter) {
         createWindow.style.display = "block";
-    });
-    form.addEventListener("submit", createListener);
-} else {
-    startBtn.addEventListener("click", e => {
-        music.play();
-        startWindow.style.display = "none";
-    })
-}
+        form.addEventListener("submit", createListener);
+    }
+})
+
 
 console.log(MainCharacter);
 
