@@ -3,7 +3,8 @@
     src: url(./fonts/PixelAzureBonds-327Z.ttf);
 }
 
-@import './creation.scss';
+@import './_start-menu';
+@import './_creation';
 
 body {
     height: 100vh;
