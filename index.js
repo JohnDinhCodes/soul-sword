@@ -1,15 +1,20 @@
 import Stats from "./modules/Stats";
+import CharacterCreation from "./modules/CharacterCreation";
 
-const MainCharacter = new Stats({
-    speed: 100,
-    toughness: 50,
-    spirtualEnergy: 200,
-    spirtualBarrier: 5,
-    strength: 200,
-});
+//Functions
+import createListener from "./functions/createListener";
 
-console.log(MainCharacter);
+const gameWindow = document.querySelector(".game");
+const createWindow = gameWindow.querySelector(".creation");
+const form = createWindow.querySelector(".creation__input-form");
 
-MainCharacter.levelUpStat({skill: "speed", ammount: 10})
+let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter"));
+
+if (!MainCharacter) {
+    createWindow.style.display = "block";
+    form.addEventListener("submit", createListener);
+} else {
+    console.log("yeet");
+}
 
 console.log(MainCharacter);
