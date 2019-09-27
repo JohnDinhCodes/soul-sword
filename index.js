@@ -14,19 +14,18 @@ let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter"));
 
 
 
-function startListener() {
-    music.play();
-    startWindow.style.display = "none";
-    createWindow.style.display = "block";
-}
-
-startBtn.addEventListener("click", startListener);
-
 if (!MainCharacter) {
-
+    startBtn.addEventListener("click", e => {
+        music.play();
+        startWindow.style.display = "none";
+        createWindow.style.display = "block";
+    });
     form.addEventListener("submit", createListener);
 } else {
-    console.log("yeet");
+    startBtn.addEventListener("click", e => {
+        music.play();
+        startWindow.style.display = "none";
+    })
 }
 
 console.log(MainCharacter);
