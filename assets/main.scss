@@ -1,5 +1,16 @@
+@font-face {
+    font-family: 'Pazure';
+    src: url(./fonts/PixelAzureBonds-327Z.ttf);
+}
+
+@import './_start-menu';
+@import './_creation';
+
 body {
+    height: 100vh;
+    width: 100vw;
     background-color: #2D0320;
+    font-family: Pazure;
 }
 
 .game {
