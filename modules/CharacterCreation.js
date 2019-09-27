@@ -6,4 +6,5 @@ class CharacterCreation extends Stats {
         this.name = name;
     }
 }
+
 module.exports = CharacterCreation;
