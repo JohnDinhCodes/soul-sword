@@ -62,4 +62,4 @@ typings/
 
 # Parcel Files (Temporary)
 dist/*
-.cache/*
+# .cache/*
