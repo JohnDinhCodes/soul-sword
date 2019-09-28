@@ -1,4 +1,4 @@
-import CharacterCreation from "./CharacterCreation";
+import Character from "./Character";
 class CreationMenu {
     constructor({ clickSound, createWindow, createMusic, createForm }) {
         this.clickSound = clickSound;
@@ -17,7 +17,7 @@ class CreationMenu {
             e.preventDefault();
             const input = this.createForm.querySelector("input");
             const name = input.value;
-            localStorage.setItem("MainCharacter", JSON.stringify(new CharacterCreation({ name })));
+            localStorage.setItem("MainCharacter", JSON.stringify(new Character({ name })));
             this.createWindow.remove();
             callback();
         })
@@ -25,14 +25,3 @@ class CreationMenu {
 }
 
 module.exports = CreationMenu;
-
-
-// e.preventDefault();
-// const name = this.querySelector("input").value;
-// this.querySelector("input").value = "";
-// localStorage.setItem("MainCharacter", JSON.stringify(new CharacterCreation({ name })));
-// this.parentElement.parentElement.querySelector(".scene-one").style.display = "block";
-// this.parentElement.parentElement.querySelector(".scene-one").style.visibility = "visible";
-// this.parentElement.parentElement.querySelector(".scene-one").classList.add("fade-in");
-// document.querySelector(".scene-one__flame").classList.add("fade-in");
-// this.parentElement.remove();

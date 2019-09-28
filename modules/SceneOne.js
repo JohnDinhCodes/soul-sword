@@ -2,14 +2,14 @@ class SceneOne {
     constructor({
         sceneOneWindow,
         sceneOneMusic,
-        sceneOneDiologue,
+        sceneOneDialogue,
         blipSound,
         sceneOneTextContainer,
     }) {
 
         this.sceneOneWindow = sceneOneWindow;
         this.sceneOneMusic = sceneOneMusic;
-        this.sceneOneDiologue = sceneOneDiologue;
+        this.sceneOneDialogue = sceneOneDialogue;
         this.blipSound = blipSound;
         this.sceneOneTextContainer = sceneOneTextContainer;
         this.timeouts = [];
@@ -51,15 +51,15 @@ class SceneOne {
 
     playDialogue() {
         let counter = 1;
-        if (counter === 1) { this.typeWriter(this.sceneOneDiologue["line1"]) }
-        const keyLength = Object.keys(this.sceneOneDiologue).length;
+        if (counter === 1) { this.typeWriter(this.sceneOneDialogue["line1"]) }
+        const keyLength = Object.keys(this.sceneOneDialogue).length;
         this.sceneOneWindow.addEventListener("click", () => {
             if (counter < keyLength) {
-                const key = Object.keys(this.sceneOneDiologue)[counter];
-                this.typeWriter(this.sceneOneDiologue[key]);
+                const key = Object.keys(this.sceneOneDialogue)[counter];
+                this.typeWriter(this.sceneOneDialogue[key]);
                 counter++
             } else {
-
+                this.sceneOneWindow.remove();
             }
 
         })

@@ -1,10 +1,11 @@
 import Stats from "./Stats";
 
-class CharacterCreation extends Stats {
+class Character extends Stats {
     constructor({ name }) {
         super();
         this.name = name;
+        this.level = 1;
     }
 }
 
-module.exports = CharacterCreation;
+module.exports = Character;

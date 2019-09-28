@@ -1,4 +1,3 @@
-// import CharacterCreation from "./modules/CharacterCreation";
 import StartMenu from "./modules/StartMenu";
 import CreationMenu from "./modules/CreationMenu";
 import SceneOne from "./modules/SceneOne";
@@ -21,29 +20,33 @@ createMusic.loop = true;
 createMusic.currentTime = 5;
 const createForm = createWindow.querySelector(".creation__input-form");
 
+let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter")) || null;
+
+
 // Scene One Elements 
 const sceneOneWindow = gameWindow.querySelector(".scene-one");
 const sceneOneMusic = sceneOneWindow.querySelector("audio");
 sceneOneMusic.loop = true;
 sceneOneMusic.currentTime = 15;
 const sceneOneTextContainer = sceneOneWindow.querySelector(".text-container");
-const sceneOneDiologue = {
+
+const sceneOneDialogue = {
     line1: "At a time before humans were born with souls",
     line2: "Your existence amounted to your skill for survival",
-    line3: "Hand to hand combat",
-    line4: "Bladesmithing",
-    line5: "Swordsmanship",
+    line3: "Swordsmanship",
+    line4: "Spiritual Energy",
+    line5: "Hand to hand combat",
     line6: "These core skills were the starting point to a long life",
-    line7: "You had to master it all in order to achieve what every human innately desired",
+    line7: "You have to master it all in order to achieve what every human innately desired",
     line8: "Survive for the chance to encounter the soul sword",
+    line9: `Will you be able to achieve the human race's dream?`,
 }
 
 // Initial Modules
 const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
-const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDiologue, sceneOneTextContainer, blipSound });
+const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
 
-let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter"));
 
 
 

@@ -1,0 +1,87 @@
+.main-UI {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: gray;
+
+    &__inventory-title {
+        color: white;
+        text-align: center;
+        border: 2px solid black;
+        margin-right: 3px;
+        background: #645E9D;
+    }
+
+    &__inventory {
+        width: 15.3rem;
+
+        &__slot {
+            border: 2px solid black;
+            height: 5rem;
+            width: 5rem;
+            display: inline-block;
+            margin-bottom: -5px;
+            background: url('./images/slot.png') no-repeat;
+            background-size: cover;
+        }
+    }
+
+    &__character-profile {
+        width: 15rem;
+        border: 2px solid black;
+        padding: 3rem;
+        background-color: #392B58;
+        text-align: center;
+
+        &__profile-image {
+            height: 10rem;
+            width: 10rem;
+            border-radius: 100%;
+            margin: 0 auto;
+            display: block;
+            border: 2px solid black;
+        }
+
+        &__character-name {
+            color: black;
+            text-shadow: 1px 2px 3px #2D0320;
+        }
+
+        &__level {
+            color: #645E9D;
+        }
+
+        &__stats {
+            width: 15rem;
+            height: 100%;
+            background-color: #645E9D;
+            border: 2px solid black;
+
+            &::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            .group {
+                height: 1.5rem;
+                float: left;
+                margin-left: 2.2rem;
+                margin-top: 2rem;
+
+                img {
+                    width: 2rem;
+                    vertical-align: middle;
+                }
+
+                span {
+                    line-height: 1.5rem;
+                    margin-left: 1rem;
+                    color: white;
+                }
+            }
+        }
+    }
+
+
+}
