@@ -10,11 +10,14 @@ html(lang="en")
         link(rel="stylesheet", href="./assets/main.scss")
 
     body
-    h1 SoulSword
+        h1 SoulSword
+        audio(src="./assets/music/click.wav" class="click-sound")
         div(class="game")
+
             div(class="start")
                 h1(class="start__title") SoulSword
                 button(class="start__start-game-btn") Start Game
+
             div(class="creation")
                 audio(src="./assets/music/battle.mp3")
                 div(class="creation__text")
@@ -24,7 +27,9 @@ html(lang="en")
                     input(class="creation__input-form__input" type="text" name="name" minlength="1" maxlength="7")
                     button(class="creation__input-form__start-btn") Start Adventure
             
-
+            div(class="scene-one")
+                audio(src="./assets/music/scene-one.mp3")
+                img(class="scene-one__flame" src="./assets/images/flame.gif", alt="blue flame")
 
 
         script(src="./index.js")
