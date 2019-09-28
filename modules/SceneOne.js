@@ -24,11 +24,16 @@ class SceneOne {
     }
 
     typeWriter(line) {
+        // Clear previous setTimout if user clicks before text is done loading
         for (let timeout of this.timeouts) {
             clearInterval(timeout);
         }
         this.sceneOneTextContainer.innerHTML = "";
+
+        // Array of individual characters from line
         let arr = line.split("");
+
+        // Loops through each character and plays blip sound
         for (let i = 0; i < line.length; i++) {
             let char = arr[i];
             this.timeouts.push(setTimeout(() => {
@@ -38,21 +43,23 @@ class SceneOne {
                 this.blipSound.pause();
                 this.blipSound.currentTime = 0;
                 this.blipSound.play();
-
             }, i * 20));
             this.timeouts[i];
         }
     }
 
 
-    playDiologue() {
-        let counter = 0;
+    playDialogue() {
+        let counter = 1;
+        if (counter === 1) { this.typeWriter(this.sceneOneDiologue["line1"]) }
         const keyLength = Object.keys(this.sceneOneDiologue).length;
         this.sceneOneWindow.addEventListener("click", () => {
             if (counter < keyLength) {
                 const key = Object.keys(this.sceneOneDiologue)[counter];
                 this.typeWriter(this.sceneOneDiologue[key]);
                 counter++
+            } else {
+
             }
 
         })
@@ -60,7 +67,7 @@ class SceneOne {
 
     playScene() {
         this.showMenu();
-        this.playDiologue();
+        this.playDialogue();
     }
 
 
