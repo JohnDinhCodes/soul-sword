@@ -4,12 +4,10 @@
     position: relative;
     width: 100%;
     height: 100%;
-    visibility: hidden;
-    opacity: 0;
+    display: none;
 
-    &.fade-in {
-        opacity: 1;
-        transition: 1.5s;
+    &.show-window {
+        display: block;
     }
 
     &__text {

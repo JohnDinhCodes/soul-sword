@@ -1,8 +1,12 @@
 .scene-one {
     background-color: black;
-    height: 100%;
-    width: 100%;
-    visibility: hidden;
+    position: absolute;
+
+    &.show-window {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
 
     &__flame {
         position: absolute;
