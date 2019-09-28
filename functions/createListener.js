@@ -1,7 +1,9 @@
 import CharacterCreation from "../modules/CharacterCreation";
+
 const clickSound = document.querySelector(".click-sound")
 const sceneOne = document.querySelector(".scene-one");
 const sceneOneMusic = sceneOne.querySelector("audio");
+
 function createListener(e) {
     clickSound.play();
     sceneOneMusic.play();

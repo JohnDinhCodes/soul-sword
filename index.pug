@@ -11,6 +11,7 @@ html(lang="en")
 
     body
         h1 SoulSword
+        audio(src="./assets/music/beep.wav" class="blip-sound" muted="muted")
         audio(src="./assets/music/click.wav" class="click-sound")
         div(class="game")
 
@@ -30,8 +31,7 @@ html(lang="en")
             div(class="scene-one")
                 audio(src="./assets/music/scene-one.mp3")
                 img(class="scene-one__flame" src="./assets/images/flame.gif", alt="blue flame")
-
-
+                div(class="text-container")
         script(src="./index.js")
 
 //- color pallete https://coolors.co/99d5c9-6c969d-645e9d-392b58-2d0320
