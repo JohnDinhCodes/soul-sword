@@ -26,13 +26,14 @@ const sceneOneWindow = gameWindow.querySelector(".scene-one");
 const sceneOneMusic = sceneOneWindow.querySelector("audio");
 const sceneOneTextContainer = sceneOneWindow.querySelector(".text-container");
 const sceneOneDiologue = {
-    line1: "A long time ago, there was a swordsman renouned for his skill.",
+    line1: "At a time before souls, there was a swordsman everyone feared.",
+    line2: "And then he yeeted"
 }
 
 // Initial Modules
 const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
-const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDiologue });
+const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDiologue, sceneOneTextContainer, blipSound });
 
 // CURRENTLY TESTING
 let textContainer = document.querySelector(".text-container");

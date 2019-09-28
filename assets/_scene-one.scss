@@ -18,7 +18,16 @@
         &.fade-in {
             opacity: 1;
             transition: opacity 10s;
-
         }
+    }
+
+    .text-container {
+        position: absolute;
+        color: white;
+        @include no-select;
+        bottom: 5rem;
+        left: 20%;
+        right: 20%;
+        text-align: center;
     }
 }
