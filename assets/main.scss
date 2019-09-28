@@ -3,6 +3,7 @@
     src: url(./fonts/PixelAzureBonds-327Z.ttf);
 }
 
+@import './mixins/mixins';
 @import './_start-menu';
 @import './_creation';
 
@@ -14,7 +15,6 @@ body {
 }
 
 .game {
-    background-color: gray;
     height: 80vh;
     width: 70vw;
     position: absolute;

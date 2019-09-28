@@ -21,6 +21,5 @@ startBtn.addEventListener("click", e => {
 })
 
 
-console.log(MainCharacter);
 
 
