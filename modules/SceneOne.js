@@ -21,7 +21,6 @@ class SceneOne {
         this.sceneOneWindow.style.display = "block";
         setTimeout(() => {
             this.sceneOneWindow.classList.add("show-window");
-            flame.draggable = false;
             flame.classList.add("fade-in");
         }, 1);
 

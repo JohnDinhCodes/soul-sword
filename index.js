@@ -7,6 +7,10 @@ import MainUI from "./modules/MainUI";
 const clickSound = document.querySelector(".click-sound");
 const blipSound = document.querySelector(".blip-sound");
 
+// All Images
+const imgs = document.querySelectorAll("img");
+
+
 // Game Div
 const gameWindow = document.querySelector(".game");
 
@@ -52,6 +56,12 @@ const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
 const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
 const mainUI = new MainUI({ mainUIEl, MainCharacter });
+
+
+// Disables user drag on images
+imgs.forEach(img => {
+    img.draggable = false;
+});
 
 
 startMenu.startBtnClick(() => {
