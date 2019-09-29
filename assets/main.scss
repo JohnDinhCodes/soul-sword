@@ -8,12 +8,14 @@
 @import './_creation';
 @import './scene-one';
 @import './mainUI';
+@import './tutorial';
 
 body {
     height: 100vh;
     width: 100vw;
     background-color: #2D0320;
     font-family: Pazure;
+    @include no-select;
 }
 
 .game {

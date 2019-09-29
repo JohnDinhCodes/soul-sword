@@ -24,7 +24,7 @@ class SceneOne {
     }
 
     typeWriter(line) {
-        // Clear previous setTimout if user clicks before text is done loading
+        // Clear previous setTimeout if user clicks before text is done loading
         for (let timeout of this.timeouts) {
             clearInterval(timeout);
         }
@@ -59,7 +59,18 @@ class SceneOne {
                 this.typeWriter(this.sceneOneDialogue[key]);
                 counter++
             } else {
-                this.sceneOneWindow.remove();
+                this.sceneOneWindow.removeEventListener("click", () => "");
+                this.sceneOneWindow.style.transition = "opacity 2s";
+                this.sceneOneWindow.style.opacity = "0";
+                this.sceneOneWindow.style.position = "absolute";
+                for (let i = 0; i < this.sceneOneMusic.volume / .1; i++) {
+                    setTimeout(() => {
+                        this.sceneOneMusic.volume -= .1;
+                    }, i * 500);
+                }
+                setTimeout(() => {
+                    this.sceneOneWindow.remove();
+                }, 5000);
             }
 
         })

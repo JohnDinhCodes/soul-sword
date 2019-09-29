@@ -4,7 +4,7 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Document
+        title SoulSword
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css")
         script(src="https://use.fontawesome.com/releases/v5.3.1/js/all.js")
         link(rel="stylesheet", href="./assets/main.scss")
@@ -13,6 +13,7 @@ html(lang="en")
         h1 SoulSword
         audio(src="./assets/music/blip.wav" class="blip-sound")
         audio(src="./assets/music/click.wav" class="click-sound")
+
         div(class="game")
 
             div(class="start")
@@ -46,27 +47,32 @@ html(lang="en")
                     div(class="main-UI__inventory__slot")
                     div(class="main-UI__inventory__slot")
                 div(class="main-UI__character-profile")
-                    img(src="./assets/images/normalMC.png" class="main-UI__character-profile__profile-image")
-                    p(class="main-UI__character-profile__character-name") Yeeters
-                    p(class="main-UI__character-profile__level") Level: 
-                        span 2
-                div(class="main-UI__character-profile__stats")
-                    div(class="group")
-                        img(src="./assets/images/strength.svg")
-                        span(class="strength-stat") 10
-                    div(class="group")
-                        img(src="./assets/images/spiritual-energy.svg")
-                        span(class="spiritual-energy-stat") 10
-                    div(class="group")
-                        img(src="./assets/images/speed.svg")
-                        span(class="speed-stat") 10
-                    div(class="group")
-                        img(src="./assets/images/toughness.svg")
-                        span(class="toughness-stat") 10
-                    div(class="group")
-                        img(src="./assets/images/spiritual-barrier.svg")
-                        span(class="spiritual-barrier-stat") 10
+                    div(class="main-UI__character-profile__card")
+                        img(src="./assets/images/normalMC.png" class="main-UI__character-profile__profile-image")
+                        p(class="main-UI__character-profile__character-name") Yeeters
+                        p(class="main-UI__character-profile__level") Level: 
+                            span 2
+                    div(class="main-UI__character-profile__stats")
+                        div(class="group")
+                            img(src="./assets/images/strength.svg")
+                            span(class="strength-stat") 10
+                        div(class="group")
+                            img(src="./assets/images/spiritual-energy.svg")
+                            span(class="spiritual-energy-stat") 10
+                        div(class="group")
+                            img(src="./assets/images/speed.svg")
+                            span(class="speed-stat") 10
+                        div(class="group")
+                            img(src="./assets/images/toughness.svg")
+                            span(class="toughness-stat") 10
+                        div(class="group")
+                            img(src="./assets/images/spiritual-barrier.svg")
+                            span(class="spiritual-barrier-stat") 10
+                img(src="./assets/images/map.svg" class="main-UI__map-image")
 
+            div(class="home")
+                div(class="home__menu")
+                
         script(src="./index.js")
 
-//- color pallete https://coolors.co/99d5c9-6c969d-645e9d-392b58-2d0320
+//- color palette https://coolors.co/99d5c9-6c969d-645e9d-392b58-2d0320

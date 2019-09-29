@@ -1,11 +1,12 @@
 .scene-one {
     background-color: black;
-    position: absolute;
+    opacity: 0;
 
     &.show-window {
         height: 100%;
         width: 100%;
         position: relative;
+        opacity: 1;
     }
 
     &__flame {

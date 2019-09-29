@@ -1,6 +1,7 @@
 import StartMenu from "./modules/StartMenu";
 import CreationMenu from "./modules/CreationMenu";
 import SceneOne from "./modules/SceneOne";
+import MainUI from "./modules/MainUI";
 
 // Global Sounds
 const clickSound = document.querySelector(".click-sound");
@@ -20,6 +21,9 @@ createMusic.loop = true;
 createMusic.currentTime = 5;
 const createForm = createWindow.querySelector(".creation__input-form");
 
+// Home Elements
+const mainUIEl = gameWindow.querySelector(".main-UI");
+
 let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter")) || null;
 
 
@@ -38,17 +42,18 @@ const sceneOneDialogue = {
     line5: "Hand to hand combat",
     line6: "These core skills were the starting point to a long life",
     line7: "You have to master it all in order to achieve what every human innately desired",
-    line8: "Survive for the chance to encounter the soul sword",
-    line9: `Will you be able to achieve the human race's dream?`,
+    line8: "Surviving.",
+    line9: "For the chance to encounter the soul sword",
+    line10: `Will you be able to achieve the human race's dream?`,
 }
+
+
 
 // Initial Modules
 const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
 const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
-
-
-
+const mainUI = new MainUI({ mainUIEl });
 
 
 startMenu.startBtnClick(() => {
@@ -60,7 +65,7 @@ startMenu.startBtnClick(() => {
 
     } else {
         console.log("Get Scene from Local Storage");
-        sceneOne.playScene();
+        mainUI.init();
 
     }
 });
