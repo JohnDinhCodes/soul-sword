@@ -2,6 +2,7 @@ import StartMenu from "./modules/StartMenu";
 import CreationMenu from "./modules/CreationMenu";
 import SceneOne from "./modules/SceneOne";
 import MainUI from "./modules/MainUI";
+import FirstBattle from "./modules/FirstBattle";
 
 // Global Sounds
 const clickSound = document.querySelector(".click-sound");
@@ -25,9 +26,10 @@ createMusic.loop = true;
 createMusic.currentTime = 5;
 const createForm = createWindow.querySelector(".creation__input-form");
 
-// Home Elements
+// Main Elements
 const mainUIEl = gameWindow.querySelector(".main-UI");
-
+const mainWindow = gameWindow.querySelector(".main-screen__window"); //TODO use this
+const mainTextContainer = mainWindow.querySelector(".main-screen__text-container");
 let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter")) || null;
 
 
@@ -50,12 +52,19 @@ const sceneOneDialogue = {
     line9: `Will you be able to achieve the human race's dream?`,
 }
 
+const testDialogue = {
+    part1: {
+        line1: "You awaken after losing consciousness from hunger",
+    }
+}
+
 
 // Initial Modules
 const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
 const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
 const mainUI = new MainUI({ mainUIEl, MainCharacter });
+const firstBattle = new FirstBattle({ mainWindow, testDialogue, mainTextContainer, blipSound });
 
 
 // Disables user drag on images
@@ -74,6 +83,7 @@ startMenu.startBtnClick(() => {
     } else {
         console.log("Get Scene from Local Storage");
         mainUI.init();
+        firstBattle.init();
         // sceneOne.playScene();
 
     }
