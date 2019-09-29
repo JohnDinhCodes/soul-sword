@@ -1,26 +1,67 @@
-import CharacterCreation from "./modules/CharacterCreation";
+import StartMenu from "./modules/StartMenu";
+import CreationMenu from "./modules/CreationMenu";
+import SceneOne from "./modules/SceneOne";
 
-//Functions
-import createListener from "./functions/createListener";
+// Global Sounds
+const clickSound = document.querySelector(".click-sound");
+const blipSound = document.querySelector(".blip-sound");
 
+// Game Div
 const gameWindow = document.querySelector(".game");
+
+// Start Window Elements
 const startWindow = gameWindow.querySelector(".start");
 const startBtn = startWindow.querySelector("button");
+
+// Character Creation Window Elements
 const createWindow = gameWindow.querySelector(".creation");
-const music = createWindow.querySelector("audio");
-const form = createWindow.querySelector(".creation__input-form");
+const createMusic = createWindow.querySelector("audio");
+createMusic.loop = true;
+createMusic.currentTime = 5;
+const createForm = createWindow.querySelector(".creation__input-form");
 
-let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter"));
-startBtn.addEventListener("click", e => {
-    music.play();
-    startWindow.style.display = "none";
+let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter")) || null;
+
+
+// Scene One Elements 
+const sceneOneWindow = gameWindow.querySelector(".scene-one");
+const sceneOneMusic = sceneOneWindow.querySelector("audio");
+sceneOneMusic.loop = true;
+sceneOneMusic.currentTime = 15;
+const sceneOneTextContainer = sceneOneWindow.querySelector(".text-container");
+
+const sceneOneDialogue = {
+    line1: "At a time before humans were born with souls",
+    line2: "Your existence amounted to your skill for survival",
+    line3: "Swordsmanship",
+    line4: "Spiritual Energy",
+    line5: "Hand to hand combat",
+    line6: "These core skills were the starting point to a long life",
+    line7: "You have to master it all in order to achieve what every human innately desired",
+    line8: "Survive for the chance to encounter the soul sword",
+    line9: `Will you be able to achieve the human race's dream?`,
+}
+
+// Initial Modules
+const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
+const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
+const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
+
+
+
+
+
+startMenu.startBtnClick(() => {
     if (!MainCharacter) {
-        createWindow.style.display = "block";
-        form.addEventListener("submit", createListener);
+        createMenu.showMenu();
+        createMenu.formListener(() => {
+            sceneOne.playScene();
+        });
+
+    } else {
+        console.log("Get Scene from Local Storage");
+        sceneOne.playScene();
+
     }
-})
-
-
-console.log(MainCharacter);
-
+});
 

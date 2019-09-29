@@ -1,0 +1,33 @@
+.scene-one {
+    background-color: black;
+    position: absolute;
+
+    &.show-window {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    &__flame {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 5s;
+
+        &.fade-in {
+            opacity: 1;
+            transition: opacity 10s;
+        }
+    }
+
+    .text-container {
+        position: absolute;
+        color: white;
+        @include no-select;
+        bottom: 5rem;
+        left: 20%;
+        right: 20%;
+        text-align: center;
+    }
+}

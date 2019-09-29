@@ -3,8 +3,11 @@
     src: url(./fonts/PixelAzureBonds-327Z.ttf);
 }
 
+@import './mixins/mixins';
 @import './_start-menu';
 @import './_creation';
+@import './scene-one';
+@import './mainUI';
 
 body {
     height: 100vh;
@@ -14,11 +17,11 @@ body {
 }
 
 .game {
-    background-color: gray;
-    height: 80vh;
-    width: 70vw;
+    height: 90vh;
+    width: 85vw;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow: hidden;
 }

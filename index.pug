@@ -10,12 +10,17 @@ html(lang="en")
         link(rel="stylesheet", href="./assets/main.scss")
 
     body
-    h1 SoulSword
+        h1 SoulSword
+        audio(src="./assets/music/blip.wav" class="blip-sound")
+        audio(src="./assets/music/click.wav" class="click-sound")
         div(class="game")
+
             div(class="start")
+                h1(class="start__title") SoulSword
                 button(class="start__start-game-btn") Start Game
+
             div(class="creation")
-                audio(src="./assets/music/main-title.mp3")
+                audio(src="./assets/music/battle.mp3")
                 div(class="creation__text")
                     h1(class="creation__text__title") SoulSword
                     p(class="creation__text__description") Enter Your Name
@@ -23,8 +28,44 @@ html(lang="en")
                     input(class="creation__input-form__input" type="text" name="name" maxlength="7")
                     button(class="creation__input-form__start-btn") Start Adventure
             
+            div(class="scene-one")
+                div(class="text-container")
+                audio(src="./assets/music/scene-one.mp3")
+                img(class="scene-one__flame" src="./assets/images/flame.gif", alt="blue flame")
 
-
+            div(class="main-UI")
+                div(class="main-UI__inventory")
+                    div(class="main-UI__inventory-title") Inventory
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                    div(class="main-UI__inventory__slot")
+                div(class="main-UI__character-profile")
+                    img(src="./assets/images/normalMC.png" class="main-UI__character-profile__profile-image")
+                    p(class="main-UI__character-profile__character-name") Yeeters
+                    p(class="main-UI__character-profile__level") Level: 
+                        span 2
+                div(class="main-UI__character-profile__stats")
+                    div(class="group")
+                        img(src="./assets/images/strength.svg")
+                        span(class="strength-stat") 10
+                    div(class="group")
+                        img(src="./assets/images/spiritual-energy.svg")
+                        span(class="spiritual-energy-stat") 10
+                    div(class="group")
+                        img(src="./assets/images/speed.svg")
+                        span(class="speed-stat") 10
+                    div(class="group")
+                        img(src="./assets/images/toughness.svg")
+                        span(class="toughness-stat") 10
+                    div(class="group")
+                        img(src="./assets/images/spiritual-barrier.svg")
+                        span(class="spiritual-barrier-stat") 10
 
         script(src="./index.js")
 
