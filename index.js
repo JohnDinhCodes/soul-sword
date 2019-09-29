@@ -41,19 +41,17 @@ const sceneOneDialogue = {
     line4: "Spiritual Energy",
     line5: "Hand to hand combat",
     line6: "These core skills were the starting point to a long life",
-    line7: "You have to master it all in order to achieve what every human innately desired",
-    line8: "Surviving.",
-    line9: "For the chance to encounter the soul sword",
-    line10: `Will you be able to achieve the human race's dream?`,
+    line7: "You had to master it all in order to achieve what every human innately desired",
+    line8: "Surviving for the chance to encounter the soul sword",
+    line9: `Will you be able to achieve the human race's dream?`,
 }
-
 
 
 // Initial Modules
 const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
 const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
-const mainUI = new MainUI({ mainUIEl });
+const mainUI = new MainUI({ mainUIEl, MainCharacter });
 
 
 startMenu.startBtnClick(() => {
