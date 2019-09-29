@@ -66,6 +66,7 @@ startMenu.startBtnClick(() => {
     } else {
         console.log("Get Scene from Local Storage");
         mainUI.init();
+        // sceneOne.playScene();
 
     }
 });

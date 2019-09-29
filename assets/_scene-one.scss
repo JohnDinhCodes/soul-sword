@@ -1,6 +1,7 @@
 .scene-one {
     background-color: black;
     opacity: 0;
+    display: none;
 
     &.show-window {
         height: 100%;

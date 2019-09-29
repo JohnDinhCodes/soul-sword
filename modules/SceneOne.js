@@ -18,9 +18,13 @@ class SceneOne {
     showMenu() {
         const flame = this.sceneOneWindow.querySelector(".scene-one__flame");
         this.sceneOneMusic.play();
-        this.sceneOneWindow.classList.add("show-window");
-        flame.draggable = false;
-        flame.classList.add("fade-in");
+        this.sceneOneWindow.style.display = "block";
+        setTimeout(() => {
+            this.sceneOneWindow.classList.add("show-window");
+            flame.draggable = false;
+            flame.classList.add("fade-in");
+        }, 1);
+
     }
 
     typeWriter(line) {
