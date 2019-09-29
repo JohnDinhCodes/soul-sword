@@ -8,6 +8,8 @@ class MainUI {
         this.MainCharacter = MainCharacter;
         this.characterLevel = this.profileImage.querySelector(".main-UI__character-profile__level span");
 
+
+        this.characterName = this.profileImage.querySelector(".main-UI__character-profile__character-name");
         this.speedStat = this.statCard.querySelector(".speed-stat");
         this.strengthStat = this.statCard.querySelector(".strength-stat");
         this.spiritualEnergyStat = this.statCard.querySelector(".spiritual-energy-stat");
@@ -23,6 +25,7 @@ class MainUI {
     }
 
     setStats() {
+        this.characterName.innerHTML = this.MainCharacter.name;
         this.characterLevel.innerHTML = this.MainCharacter.level;
         this.speedStat.innerHTML = this.MainCharacter.speed;
         this.strengthStat.innerHTML = this.MainCharacter.strength;
