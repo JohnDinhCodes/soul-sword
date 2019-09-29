@@ -47,12 +47,11 @@ const sceneOneDialogue = {
 }
 
 
-
 // Initial Modules
 const startMenu = new StartMenu({ startBtn, clickSound, startWindow });
 const createMenu = new CreationMenu({ clickSound, createWindow, createMusic, createForm });
 const sceneOne = new SceneOne({ sceneOneWindow, sceneOneMusic, sceneOneDialogue, sceneOneTextContainer, blipSound });
-const mainUI = new MainUI({ mainUIEl });
+const mainUI = new MainUI({ mainUIEl, MainCharacter });
 
 
 startMenu.startBtnClick(() => {
