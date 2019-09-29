@@ -2,19 +2,17 @@
     height: 36rem;
     width: 100%;
     position: relative;
-    background: url('./images/sunsetintheswamp.png') no-repeat;
-    background-size: cover;
 
-    &__dialogue {
-        height: 15rem;
-        width: 52.8rem;
+
+    &__window {
         position: absolute;
         right: 0;
-        border: 2px solid black;
-        border-top: 3px solid black;
-        overflow: auto;
-        padding: 1rem;
-        line-height: 1.6rem;
-        color: rgb(230, 230, 230);
+        top: 0;
+        height: 35.9rem;
+        width: 52.8rem;
+        // background: url('./images/sunsetintheswamp.png') no-repeat;
+        // background-size: cover;
     }
+
+
 }
