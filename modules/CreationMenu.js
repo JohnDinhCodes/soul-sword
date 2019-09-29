@@ -17,9 +17,12 @@ class CreationMenu {
             e.preventDefault();
             const input = this.createForm.querySelector("input");
             const name = input.value;
-            localStorage.setItem("MainCharacter", JSON.stringify(new Character({ name })));
-            this.createWindow.remove();
-            callback();
+            if (name.length > 0) {
+                localStorage.setItem("MainCharacter", JSON.stringify(new Character({ name })));
+                this.createWindow.remove();
+                callback();
+            }
+
         })
     }
 }

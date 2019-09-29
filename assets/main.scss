@@ -19,11 +19,12 @@ body {
 }
 
 .game {
-    height: 90vh;
-    width: 85vw;
+    height: 50rem;
+    width: 68rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
+    border: 2px solid #392B58;
 }
