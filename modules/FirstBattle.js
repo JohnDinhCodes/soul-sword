@@ -1,3 +1,5 @@
+// TODO clean up this mess
+
 class FirstBattle {
     constructor({ mainWindow, firstBattleData, mainTextContainer, blipSound, battleMusic }) {
         this.mainWindow = mainWindow;
@@ -10,6 +12,32 @@ class FirstBattle {
         this.battleMusic = battleMusic;
     }
 
+    clearTimeouts() {
+        for (let timeout of this.timeouts) {
+            clearInterval(timeout);
+        }
+    }
+
+
+
+    option1() {
+        this.mainWindow.querySelector("#option-1").addEventListener("click", (e) => {
+            this.buttonContainer.innerHTML = "";
+            this.mainTextContainer.innerHTML = "";
+            console.log("do something for option 1 here");
+            this.clearTimeouts();
+        });
+    }
+
+    option2() {
+        this.mainWindow.querySelector("#option-2").addEventListener("click", (e) => {
+            this.buttonContainer.innerHTML = "";
+            this.mainTextContainer.innerHTML = "";
+            console.log("do something for option 2 here");
+            this.clearTimeouts();
+        });
+    }
+
     init() {
         this.playDialogue(this.mainWindow, this.part1Dialogue, this.mainTextContainer, this.blipSound);
         this.battleMusic.play();
@@ -19,9 +47,11 @@ class FirstBattle {
         for (let i = 0; i < this.part1Buttons.length; i++) {
             const button = document.createElement("button");
             button.innerHTML = this.part1Buttons[i];
-            button.setAttribute("id", `option-${i}`);
+            button.setAttribute("id", `option-${i + 1}`);
             this.buttonContainer.appendChild(button);
         }
+        this.option1();
+        this.option2();
     }
 
     typeWriter(line, textContainer, blipSound) {

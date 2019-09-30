@@ -31,7 +31,7 @@ const createForm = createWindow.querySelector(".creation__input-form");
 
 // Main Elements
 const mainUIEl = gameWindow.querySelector(".main-UI");
-const mainWindow = gameWindow.querySelector(".main-screen__window"); //TODO use this
+const mainWindow = gameWindow.querySelector(".main-screen__window");
 const mainTextContainer = mainWindow.querySelector(".main-screen__text-container");
 let MainCharacter = JSON.parse(localStorage.getItem("MainCharacter")) || null;
 
