@@ -5,6 +5,7 @@ class Character extends Stats {
         super();
         this.name = name;
         this.level = 1;
+        this.health = 10;
     }
 }
 

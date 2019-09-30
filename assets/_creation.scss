@@ -1,5 +1,5 @@
 .creation {
-    background: url('./images/sunsetintheswamp.png') no-repeat;
+    background: url('./images/backgrounds/sunsetintheswamp.png') no-repeat;
     background-size: cover;
     position: relative;
     width: 100%;
@@ -37,7 +37,7 @@
         top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
-        // border: 2px solid black;
+        //border: 2px solid #99D5C9;
 
         &__input {
             display: block;
