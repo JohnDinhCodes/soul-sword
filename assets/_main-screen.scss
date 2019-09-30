@@ -8,11 +8,23 @@
         position: absolute;
         right: 0;
         top: 0;
-        height: 35.9rem;
-        width: 52.8rem;
+
+
+        &__image-container {
+            height: 36rem;
+            width: 52.7rem;
+
+            &__black-overlay {
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                opacity: .5;
+                position: absolute;
+            }
+        }
 
         &__background {
-            height: 100;
+            height: 100%;
             width: 100%;
         }
     }
@@ -27,6 +39,31 @@
         text-align: center;
         transform: translateY(-50%);
 
+    }
+
+    &__button-container {
+        width: 33rem;
+        position: absolute;
+        top: 25rem;
+        left: 20%;
+        right: 20%;
+        text-align: center;
+        transform: translateY(-50%);
+
+        button {
+            outline: none;
+            border: 2px solid rgb(61, 57, 104);
+            padding: 1rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #645E9D;
+            margin-right: 2rem;
+            margin-top: 2rem;
+
+            &:hover {
+                box-shadow: 3px 5px 20px rgb(151, 143, 219);
+            }
+        }
     }
 
 

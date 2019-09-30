@@ -1,14 +1,27 @@
 class FirstBattle {
-    constructor({ mainWindow, testDialogue, mainTextContainer, blipSound }) {
+    constructor({ mainWindow, firstBattleData, mainTextContainer, blipSound, battleMusic }) {
         this.mainWindow = mainWindow;
-        this.testDialogue = testDialogue;
+        this.part1Dialogue = firstBattleData.part1;
         this.mainTextContainer = mainTextContainer;
         this.blipSound = blipSound;
         this.timeouts = [];
+        this.part1Buttons = firstBattleData.part1Buttons;
+        this.buttonContainer = mainWindow.querySelector(".main-screen__button-container");
+        this.battleMusic = battleMusic;
     }
 
     init() {
-        this.playDialogue(this.mainWindow, this.testDialogue.part1, this.mainTextContainer, this.blipSound);
+        this.playDialogue(this.mainWindow, this.part1Dialogue, this.mainTextContainer, this.blipSound);
+        this.battleMusic.play();
+    }
+
+    buttons() {
+        for (let i = 0; i < this.part1Buttons.length; i++) {
+            const button = document.createElement("button");
+            button.innerHTML = this.part1Buttons[i];
+            button.setAttribute("id", `option-${i}`);
+            this.buttonContainer.appendChild(button);
+        }
     }
 
     typeWriter(line, textContainer, blipSound) {
@@ -45,24 +58,10 @@ class FirstBattle {
             if (counter < keyLength) {
                 const key = Object.keys(dialogue)[counter];
                 this.typeWriter(dialogue[key], textContainer, blipSound);
+                if (counter === keyLength - 1) { this.buttons() };
                 counter++
-            } else {
-                mainWindow.removeEventListener("click", () => "");
-                // this.sceneOneWindow.removeEventListener("click", () => "");
-                // this.sceneOneWindow.style.transition = "opacity 2s";
-                // this.sceneOneWindow.style.opacity = "0";
-                // this.sceneOneWindow.style.position = "absolute";
-                // for (let i = 0; i < this.sceneOneMusic.volume / .1; i++) {
-                //     setTimeout(() => {
-                //         this.sceneOneMusic.volume -= .1;
-                //     }, i * 500);
-                // }
-                // setTimeout(() => {
-                //     this.sceneOneWindow.remove();
-                // }, 5000);
             }
-
-        })
+        });
     }
 
 

@@ -13,6 +13,8 @@ html(lang="en")
         h1 SoulSword
         audio(src="./assets/music/blip.wav" class="blip-sound")
         audio(src="./assets/music/click.wav" class="click-sound")
+        
+        audio(src="./assets/music/battle.mp3" class="battle-music")
 
         div(class="game")
 
@@ -21,7 +23,7 @@ html(lang="en")
                 button(class="start__start-game-btn") Start Game
 
             div(class="creation")
-                audio(src="./assets/music/battle.mp3")
+                audio(src="./assets/music/wizzard.mp3")
                 div(class="creation__text")
                     h1(class="creation__text__title") SoulSword
                     p(class="creation__text__description") Enter Your Name
@@ -37,8 +39,10 @@ html(lang="en")
             div(class="main-screen")
                 div(class="main-screen__window")
                     div(class="main-screen__window__image-container")
+                        div(class="main-screen__window__image-container__black-overlay")
                         img(src="./assets/images/backgrounds/sunsetintheswamp.png" class="main-screen__window__background")
                     div(class="main-screen__text-container")
+                    div(class="main-screen__button-container")
                 div(class="main-UI")
                     div(class="main-UI__inventory")
                         div(class="main-UI__inventory-title") Inventory
