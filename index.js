@@ -63,7 +63,11 @@ const firstBattleData = {
         line3: "It's getting late, the sun is setting soon",
         line4: "Do you want to search for your parents now? Or should you wait until sunrise?",
     },
-    part1Buttons: ["Search for your parents", "Wait until sunrise"]
+    part1Buttons: ["Search for your parents", "Wait until sunrise"],
+    searchForParents: {
+        line1: "Let the yeeting commence", //TODO add diologue for this choice
+        line2: "You have been yeeted"
+    }
 }
 
 

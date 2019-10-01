@@ -15,6 +15,12 @@ class SceneOne {
         this.timeouts = [];
     }
 
+    clearTimeouts() {
+        for (let timeout of this.timeouts) {
+            clearInterval(timeout);
+        }
+    }
+
     showMenu() {
         const flame = this.sceneOneWindow.querySelector(".scene-one__flame");
         this.sceneOneMusic.play();
@@ -28,9 +34,7 @@ class SceneOne {
 
     typeWriter(line) {
         // Clear previous setTimeout if user clicks before text is done loading
-        for (let timeout of this.timeouts) {
-            clearInterval(timeout);
-        }
+        this.clearTimeouts();
         this.sceneOneTextContainer.innerHTML = "";
 
         // Array of individual characters from line

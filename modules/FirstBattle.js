@@ -1,8 +1,15 @@
 // TODO clean up this mess
 
 class FirstBattle {
-    constructor({ mainWindow, firstBattleData, mainTextContainer, blipSound, battleMusic }) {
+    constructor({
+        mainWindow,
+        firstBattleData,
+        mainTextContainer,
+        blipSound,
+        battleMusic
+    }) {
         this.mainWindow = mainWindow;
+        this.firstBattleData = firstBattleData;
         this.part1Dialogue = firstBattleData.part1;
         this.mainTextContainer = mainTextContainer;
         this.blipSound = blipSound;
@@ -10,6 +17,11 @@ class FirstBattle {
         this.part1Buttons = firstBattleData.part1Buttons;
         this.buttonContainer = mainWindow.querySelector(".main-screen__button-container");
         this.battleMusic = battleMusic;
+    }
+
+    init() {
+        this.playDialogue(this.mainWindow, this.part1Dialogue, this.mainTextContainer, this.blipSound);
+        this.battleMusic.play();
     }
 
     clearTimeouts() {
@@ -24,8 +36,9 @@ class FirstBattle {
         this.mainWindow.querySelector("#option-1").addEventListener("click", (e) => {
             this.buttonContainer.innerHTML = "";
             this.mainTextContainer.innerHTML = "";
-            console.log("do something for option 1 here");
             this.clearTimeouts();
+            this.playDialogue(this.mainWindow, this.firstBattleData.searchForParents, this.mainTextContainer, this.blipSound);
+            
         });
     }
 
@@ -38,10 +51,7 @@ class FirstBattle {
         });
     }
 
-    init() {
-        this.playDialogue(this.mainWindow, this.part1Dialogue, this.mainTextContainer, this.blipSound);
-        this.battleMusic.play();
-    }
+
 
     buttons() {
         for (let i = 0; i < this.part1Buttons.length; i++) {
@@ -56,9 +66,7 @@ class FirstBattle {
 
     typeWriter(line, textContainer, blipSound) {
         // Clear previous setTimeout if user clicks before text is done loading
-        for (let timeout of this.timeouts) {
-            clearInterval(timeout);
-        }
+        this.clearTimeouts();
         textContainer.innerHTML = "";
 
         // Array of individual characters from line
@@ -82,13 +90,17 @@ class FirstBattle {
 
     playDialogue(mainWindow, dialogue, textContainer, blipSound) {
         let counter = 1;
-        if (counter === 1) { this.typeWriter(dialogue["line1"], textContainer, blipSound) }
+        if (counter === 1) {
+            this.typeWriter(dialogue["line1"], textContainer, blipSound)
+        }
         const keyLength = Object.keys(dialogue).length;
         mainWindow.addEventListener("click", () => {
             if (counter < keyLength) {
                 const key = Object.keys(dialogue)[counter];
                 this.typeWriter(dialogue[key], textContainer, blipSound);
-                if (counter === keyLength - 1) { this.buttons() };
+                if (counter === keyLength - 1) {
+                    this.buttons()
+                };
                 counter++
             }
         });
