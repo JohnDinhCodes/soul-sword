@@ -1,5 +1,3 @@
-import { callbackify } from "util";
-
 class TypeWriter {
     constructor(blipSound, textContainer, dialogue) {
         this.blipSound = blipSound;
