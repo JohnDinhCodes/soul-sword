@@ -47,11 +47,11 @@ class SceneOne {
                 const span = document.createElement("span");
                 span.innerHTML = char;
                 this.sceneOneTextContainer.appendChild(span);
-                this.blipSound.pause();
+                // this.blipSound.pause();
                 this.blipSound.currentTime = 0;
                 this.blipSound.play();
             }, i * 20));
-            this.timeouts[i];
+            // this.timeouts[i];
         }
     }
 

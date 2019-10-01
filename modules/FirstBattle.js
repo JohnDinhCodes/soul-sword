@@ -79,7 +79,7 @@ class FirstBattle {
                 const span = document.createElement("span");
                 span.innerHTML = char;
                 textContainer.appendChild(span);
-                blipSound.pause();
+                // blipSound.pause();
                 blipSound.currentTime = 0;
                 blipSound.play();
             }, i * 20));
@@ -90,8 +90,9 @@ class FirstBattle {
 
     playDialogue(mainWindow, dialogue, textContainer, blipSound) {
         let counter = 1;
+        const firstLine = Object.keys(dialogue)[0];
         if (counter === 1) {
-            this.typeWriter(dialogue["line1"], textContainer, blipSound)
+            this.typeWriter(dialogue[firstLine], textContainer, blipSound)
         }
         const keyLength = Object.keys(dialogue).length;
         mainWindow.addEventListener("click", () => {
