@@ -1,0 +1,24 @@
+.start {
+    background: url('./images/backgrounds/coldmountain.png') no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    &__title {
+        position: absolute;
+        font-size: 5rem;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow: 5px 7px 7px rgba(rgb(0, 143, 153), 1)
+    }
+
+    &__start-game-btn {
+        position: relative;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include btn;
+    }
+}

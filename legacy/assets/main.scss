@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'Pazure';
+    src: url(./fonts/PixelAzureBonds-327Z.ttf);
+}
+
+@import './mixins/mixins';
+@import './_start-menu';
+@import './_creation';
+@import './scene-one';
+@import './mainUI';
+@import './main-screen';
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: #2D0320;
+    font-family: Pazure;
+    @include no-select;
+}
+
+.game {
+    height: 50rem;
+    width: 68rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    border: 2px solid #392B58;
+}
