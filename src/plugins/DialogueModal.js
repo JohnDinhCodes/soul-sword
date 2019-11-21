@@ -22,7 +22,7 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     this.windowHeight = opts.windowHeight || 150;
     this.padding = opts.padding || 32;
     this.closeBtnColor = opts.closeBtnColor || "darkgoldenrod";
-    this.dialogSpeed = opts.dialogSpeed || 3;
+    this.dialogueSpeed = opts.dialogSpeed || 4;
     this.scene = opts.scene;
 
     // used for animating the text
@@ -94,13 +94,71 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
 
     this.closeBtn.on("pointerdown", () => {
       this.toggleWindow();
+      if (this.timedEvent) this.timedEvent.remove();
+      if (this.text) this.text.destroy();
     });
+
+    this.scene.input.keyboard.on("keydown_A", () => {
+      this.toggleWindow();
+      if (this.timedEvent) this.timedEvent.remove();
+      if (this.text) this.text.destroy();
+    });
+    // this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
   }
 
   createCloseModalButtonBorder() {
     const x = this.getGameWidth() - this.padding - 20;
     const y = this.getGameHeight() - this.windowHeight - this.padding;
     this.graphics.strokeRect(x, y, 20, 20);
+  }
+
+  toggleWindow() {
+    this.visible = false;
+    if (this.text) this.text.visible = this.visible;
+    if (this.graphics) this.graphics.visible = this.visible;
+    if (this.closeBtn) this.closeBtn.visible = this.visible;
+  }
+
+  setText(text, animate) {
+    this.eventCounter = 0;
+    this.dialogue = text.split("");
+    if (this.timedEvent) this.timedEvent.remove();
+
+    const tempText = animate ? "" : text;
+    this._setText(tempText);
+
+    if (animate) {
+      this.timedEvent = this.scene.time.addEvent({
+        delay: 150 - this.dialogueSpeed * 30,
+        callback: this.animateText,
+        callbackScope: this,
+        loop: true
+      });
+    }
+  }
+
+  _setText(text) {
+    if (this.text) this.text.destroy();
+
+    const x = this.padding + 10;
+    const y = this.getGameHeight() - this.windowHeight - this.padding + 10;
+
+    this.text = this.scene.make.text({
+      x,
+      y,
+      text,
+      style: {
+        wordWrap: { width: this.getGameWidth() - this.padding * 2 - 25 }
+      }
+    });
+  }
+
+  animateText() {
+    this.eventCounter++;
+    this.text.setText(this.text.text + this.dialogue[this.eventCounter - 1]);
+    if (this.eventCounter === this.dialogue.length) {
+      this.timedEvent.remove();
+    }
   }
 
   createWindow() {
@@ -113,6 +171,11 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     this.createInnerWindow(dimensions);
     this.createCloseModalButton();
     this.createCloseModalButtonBorder();
+  }
+
+  destroy() {
+    if (this.timedEvent) this.timedEvent.remove();
+    if (this.text) this.text.destroy();
   }
 }
 

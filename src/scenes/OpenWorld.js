@@ -92,7 +92,11 @@ class OpenWorld extends Phaser.Scene {
       "dialogueModal",
       { scene: this }
     );
-    // plugin.createWindow();
+    plugin.createWindow();
+    plugin.setText(
+      "A long time ago I tried to steal god's soul. It didn't work out well so i just ended up YEETING",
+      true
+    );
   }
 
   update(time, delta) {
