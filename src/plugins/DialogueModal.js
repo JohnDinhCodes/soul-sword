@@ -9,8 +9,17 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     if (!opts) {
       opts = {};
       console.log(
-        "Please set a scene value for opts with",
+        "Please set scene in opts data with the following",
         "\nhttps://photonstorm.github.io/phaser3-docs/Phaser.Plugins.PluginManager.html#install__anchor"
+        //   install plugin in a Phaser.Scene class
+        //   let plugin = this.plugins.install(
+        //   "dialogueModal",
+        //   dialogueModal,
+        //   true,
+        //   "dialogueModal",
+        //   { scene: this } <--- you need to pass at least the scene to make plugin work
+        // );
+        // plugin.createWindow();
       );
     }
     // set properties from opts object or use defaults
@@ -98,12 +107,14 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
       if (this.text) this.text.destroy();
     });
 
-    this.scene.input.keyboard.on("keydown_A", () => {
-      this.toggleWindow();
+    this.scene.input.keyboard.on("keydown_Z", () => {
+      this.toggleWindow(false);
       if (this.timedEvent) this.timedEvent.remove();
       if (this.text) this.text.destroy();
+      this.scene.input.keyboard.removeAllListeners();
+      this.closeBtn = null;
+      console.log(this.scene.input.keyboard._events);
     });
-    // this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
   }
 
   createCloseModalButtonBorder() {
@@ -112,8 +123,12 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     this.graphics.strokeRect(x, y, 20, 20);
   }
 
-  toggleWindow() {
-    this.visible = false;
+  toggleWindow(setValue) {
+    if (setValue === false) {
+      this.visible = setValue;
+    } else {
+      this.visible = !this.visible;
+    }
     if (this.text) this.text.visible = this.visible;
     if (this.graphics) this.graphics.visible = this.visible;
     if (this.closeBtn) this.closeBtn.visible = this.visible;
@@ -162,7 +177,6 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
   }
 
   createWindow() {
-    console.log("createWindow is being called");
     const gameHeight = this.getGameHeight();
     const gameWidth = this.getGameWidth();
     const dimensions = this.calculateWindowDimensions(gameWidth, gameHeight);

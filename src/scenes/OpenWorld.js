@@ -85,18 +85,44 @@ class OpenWorld extends Phaser.Scene {
       }),
       frameRate: 10
     });
-    let plugin = this.plugins.install(
+    let dialogueModalPlugin = this.plugins.install(
       "dialogueModal",
       dialogueModal,
       true,
       "dialogueModal",
       { scene: this }
     );
-    plugin.createWindow();
-    plugin.setText(
-      "A long time ago I tried to steal god's soul. It didn't work out well so i just ended up YEETING",
-      true
+
+    // Initial RPG Tutorial
+    this.dialoguePlayer(
+      [
+        "You can move around with your keyboard's arrow keys",
+        "Your 'X' key is used for confirming actions",
+        "Your 'Z' is used for closing and canceling actions",
+        "Go ahead and close this window with your 'Z' key"
+      ],
+      dialogueModalPlugin
     );
+    // plugin.createWindow();
+    // plugin.setText("You can move around with your keyboard's arrow keys", true);
+    // plugin.setText(
+    //   "Your 'X' button is used for confirming actions\nYour 'Z' button is used for closing and canceling actions",
+    //   true
+    // );
+  }
+
+  dialoguePlayer([...dialogue], plugin) {
+    plugin.createWindow();
+    let counter = 1;
+    plugin.setText(dialogue[0], true);
+    this.input.keyboard.on("keydown_X", () => {
+      if (counter === dialogue.length) {
+        plugin.toggleWindow(false);
+      } else {
+        plugin.setText(dialogue[counter], true);
+        counter++;
+      }
+    });
   }
 
   update(time, delta) {
