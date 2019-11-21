@@ -113,7 +113,6 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
       if (this.text) this.text.destroy();
       this.scene.input.keyboard.removeAllListeners();
       this.closeBtn = null;
-      console.log(this.scene.input.keyboard._events);
     });
   }
 

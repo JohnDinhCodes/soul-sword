@@ -96,19 +96,15 @@ class OpenWorld extends Phaser.Scene {
     // Initial RPG Tutorial
     this.dialoguePlayer(
       [
-        "You can move around with your keyboard's arrow keys",
-        "Your 'X' key is used for confirming actions",
-        "Your 'Z' is used for closing and canceling actions",
-        "Go ahead and close this window with your 'Z' key"
+        "Your 'X' key is used for confirming actions.\nTry pressing 'X' to continue.",
+        "You can move around with your keyboard's arrow keys.",
+        "Your 'Z' key is used for closing and canceling actions.",
+        "You can skip dialogue completely by pressing the 'Z' key.",
+        "When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+        "You can always replay this by talking to the old man in (insert home village here)"
       ],
       dialogueModalPlugin
     );
-    // plugin.createWindow();
-    // plugin.setText("You can move around with your keyboard's arrow keys", true);
-    // plugin.setText(
-    //   "Your 'X' button is used for confirming actions\nYour 'Z' button is used for closing and canceling actions",
-    //   true
-    // );
   }
 
   dialoguePlayer([...dialogue], plugin) {
