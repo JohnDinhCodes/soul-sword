@@ -4,9 +4,9 @@ import OpenWorld from "./scenes/OpenWorld";
 import DialogueModal from "./plugins/DialogueModal";
 
 const config = {
-  width: 320,
-  height: 240,
-  zoom: 3,
+  width: 400,
+  height: 300,
+  zoom: 2,
   type: Phaser.AUTO,
   parent: "game",
   scene: [Loading, OpenWorld],

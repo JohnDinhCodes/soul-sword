@@ -28,8 +28,8 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     this.borderAlpha = opts.borderAlpha || 1;
     this.windowAlpha = opts.windowAlpha || 0.8;
     this.windowColor = opts.windowColor || 0x303030;
-    this.windowHeight = opts.windowHeight || 150;
-    this.padding = opts.padding || 32;
+    this.windowHeight = opts.windowHeight || 80;
+    this.padding = opts.padding || 0;
     this.closeBtnColor = opts.closeBtnColor || "darkgoldenrod";
     this.dialogueSpeed = opts.dialogSpeed || 4;
     this.scene = opts.scene;
@@ -113,6 +113,7 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
       if (this.text) this.text.destroy();
       this.scene.input.keyboard.removeAllListeners();
       this.closeBtn = null;
+      this.scene.canMove = true;
     });
   }
 

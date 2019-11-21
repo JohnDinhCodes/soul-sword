@@ -7,6 +7,7 @@ import dialogueModal from "../plugins/DialogueModal";
 class OpenWorld extends Phaser.Scene {
   constructor() {
     super({ key: "OpenWorld" });
+    this.canMove = true;
   }
 
   init() {}
@@ -108,12 +109,14 @@ class OpenWorld extends Phaser.Scene {
   }
 
   dialoguePlayer([...dialogue], plugin) {
+    this.canMove = false;
     plugin.createWindow();
     let counter = 1;
     plugin.setText(dialogue[0], true);
     this.input.keyboard.on("keydown_X", () => {
       if (counter === dialogue.length) {
         plugin.toggleWindow(false);
+        this.canMove = true;
       } else {
         plugin.setText(dialogue[counter], true);
         counter++;
@@ -122,25 +125,27 @@ class OpenWorld extends Phaser.Scene {
   }
 
   update(time, delta) {
-    this.player.body.setVelocity(0);
+    if (this.canMove) {
+      this.player.body.setVelocity(0);
 
-    // Horizontal movement
-    if (this.cursors.left.isDown) {
-      this.player.body.setVelocityX(-80);
-      this.player.anims.play("left", true);
-    } else if (this.cursors.right.isDown) {
-      this.player.body.setVelocityX(80);
-      this.player.anims.play("right", true);
-    }
+      // Horizontal movement
+      if (this.cursors.left.isDown) {
+        this.player.body.setVelocityX(-80);
+        this.player.anims.play("left", true);
+      } else if (this.cursors.right.isDown) {
+        this.player.body.setVelocityX(80);
+        this.player.anims.play("right", true);
+      }
 
-    // Vertical movement
-    else if (this.cursors.up.isDown) {
-      this.player.body.setVelocityY(-80);
-      this.player.anims.play("up", true);
-    } else if (this.cursors.down.isDown) {
-      this.player.body.setVelocityY(80);
-      this.player.anims.play("down", true);
-    } else {
+      // Vertical movement
+      else if (this.cursors.up.isDown) {
+        this.player.body.setVelocityY(-80);
+        this.player.anims.play("up", true);
+      } else if (this.cursors.down.isDown) {
+        this.player.body.setVelocityY(80);
+        this.player.anims.play("down", true);
+      } else {
+      }
     }
   }
 }
