@@ -47,7 +47,6 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
   }
 
   getGameWidth() {
-    console.log(this.scene.sys.game);
     return this.scene.sys.game.config.width;
   }
 
@@ -55,9 +54,19 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     return this.scene.sys.game.config.height;
   }
 
+  getCameraX() {
+    let x = this.getGameWidth() / 2 - this.scene.cameras.main.midPoint.x;
+    return x > 0 ? 0 : x;
+  }
+
+  getCameraY() {
+    const y = this.getGameHeight() / 2 - this.scene.cameras.main.midPoint.y;
+    return y > 0 ? 0 : y;
+  }
+
   calculateWindowDimensions(width, height) {
-    const x = this.padding;
-    const y = height - this.windowHeight - this.padding;
+    const x = this.padding - this.getCameraX();
+    const y = height - this.windowHeight - this.padding - this.getCameraY();
     const rectWidth = width - this.padding * 2;
     const rectHeight = this.windowHeight;
     return {
@@ -84,8 +93,13 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
 
   createCloseModalButton() {
     this.closeBtn = this.scene.make.text({
-      x: this.getGameWidth() - this.padding - 14,
-      y: this.getGameHeight() - this.windowHeight - this.padding + 3,
+      x: this.getGameWidth() - this.padding - 14 - this.getCameraX(),
+      y:
+        this.getGameHeight() -
+        this.windowHeight -
+        this.padding +
+        3 -
+        this.getCameraY(),
       text: "X",
       style: {
         font: "bold 12px Arial",
@@ -119,8 +133,12 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
   }
 
   createCloseModalButtonBorder() {
-    const x = this.getGameWidth() - this.padding - 20;
-    const y = this.getGameHeight() - this.windowHeight - this.padding;
+    const x = this.getGameWidth() - this.padding - 20 - this.getCameraX();
+    const y =
+      this.getGameHeight() -
+      this.windowHeight -
+      this.padding -
+      this.getCameraY();
     this.graphics.strokeRect(x, y, 20, 20);
   }
 
@@ -156,8 +174,13 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
   _setText(text) {
     if (this.text) this.text.destroy();
 
-    const x = this.padding + 10;
-    const y = this.getGameHeight() - this.windowHeight - this.padding + 10;
+    const x = this.padding + 10 - this.getCameraX();
+    const y =
+      this.getGameHeight() -
+      this.windowHeight -
+      this.padding +
+      10 -
+      this.getCameraY();
 
     this.text = this.scene.make.text({
       x,

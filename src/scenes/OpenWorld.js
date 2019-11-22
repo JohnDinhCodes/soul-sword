@@ -145,7 +145,7 @@ class OpenWorld extends Phaser.Scene {
   }
 
   update(time, delta) {
-    console.log(this.cameras.main.midPoint);
+    // console.log(this.cameras.main.midPoint);
     if (this.canMove) {
       this.player.body.setVelocity(0);
 
