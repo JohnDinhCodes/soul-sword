@@ -107,7 +107,6 @@ class OpenWorld extends Phaser.Scene {
       dialogueModalPlugin
     );
     setTimeout(() => {
-      console.log(this.cameras);
       this.dialoguePlayer(
         [
           "Your 'X' key is used for confirming actions.\nTry pressing 'X' to continue.",

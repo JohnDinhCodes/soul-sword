@@ -117,6 +117,8 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     });
 
     this.closeBtn.on("pointerdown", () => {
+      this.scene.input.keyboard.removeAllListeners();
+
       this.closeWindow();
     });
 
