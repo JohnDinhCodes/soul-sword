@@ -106,6 +106,20 @@ class OpenWorld extends Phaser.Scene {
       ],
       dialogueModalPlugin
     );
+    setTimeout(() => {
+      console.log(this.cameras);
+      this.dialoguePlayer(
+        [
+          "Your 'X' key is used for confirming actions.\nTry pressing 'X' to continue.",
+          "You can move around with your keyboard's arrow keys.",
+          "Your 'Z' key is used for closing and canceling actions.",
+          "You can skip dialogue completely by pressing the 'Z' key.",
+          "When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+          "You can always replay this by talking to the old man in (insert home village here)"
+        ],
+        dialogueModalPlugin
+      );
+    }, 5000);
   }
 
   dialoguePlayer([...dialogue], plugin) {
@@ -113,8 +127,14 @@ class OpenWorld extends Phaser.Scene {
     plugin.createWindow();
     let counter = 1;
     plugin.setText(dialogue[0], true);
+    this.input.keyboard.on("keydown_Z", () => {
+      this.input.keyboard.removeAllListeners();
+      plugin.toggleWindow(false);
+    });
     this.input.keyboard.on("keydown_X", () => {
       if (counter === dialogue.length) {
+        this.input.keyboard.removeAllListeners();
+
         plugin.toggleWindow(false);
         this.canMove = true;
       } else {
@@ -125,6 +145,7 @@ class OpenWorld extends Phaser.Scene {
   }
 
   update(time, delta) {
+    console.log(this.cameras.main.midPoint);
     if (this.canMove) {
       this.player.body.setVelocity(0);
 

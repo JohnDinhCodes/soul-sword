@@ -29,6 +29,4 @@ const game = new Phaser.Game(config);
 
 function preload() {}
 
-function create() {
-  let plugin1 = this.plugins.install("dialogueModal", DialogueModal);
-}
+function create() {}

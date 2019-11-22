@@ -47,6 +47,7 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
   }
 
   getGameWidth() {
+    console.log(this.scene.sys.game);
     return this.scene.sys.game.config.width;
   }
 
@@ -102,19 +103,19 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     });
 
     this.closeBtn.on("pointerdown", () => {
-      this.toggleWindow();
-      if (this.timedEvent) this.timedEvent.remove();
-      if (this.text) this.text.destroy();
+      this.closeWindow();
     });
 
     this.scene.input.keyboard.on("keydown_Z", () => {
-      this.toggleWindow(false);
-      if (this.timedEvent) this.timedEvent.remove();
-      if (this.text) this.text.destroy();
-      this.scene.input.keyboard.removeAllListeners();
-      this.closeBtn = null;
-      this.scene.canMove = true;
+      this.closeWindow();
     });
+  }
+
+  closeWindow() {
+    this.toggleWindow(false);
+    if (this.timedEvent) this.timedEvent.remove();
+    if (this.text) this.text.destroy();
+    this.scene.canMove = true;
   }
 
   createCloseModalButtonBorder() {
@@ -188,6 +189,8 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
   }
 
   destroy() {
+    this.scene.input.keyboard.removeAllListeners();
+
     if (this.timedEvent) this.timedEvent.remove();
     if (this.text) this.text.destroy();
   }
