@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import tilesetFile from "../assets/overworld_tileset_grass.png";
-import tilemapJSONFile from "../assets/OpenWorld.json";
+import tilesetFile from "../assets/maps/tilesets/outside.png";
+import tilemapJSONFile from "../assets/maps/HomeTown/HomeTown.json";
 import playerSpritesheetFile from "../assets/player.png";
 import dialogueModal from "../plugins/DialogueModal";
 
@@ -8,7 +8,8 @@ class OpenWorld extends Phaser.Scene {
   constructor() {
     super({ key: "OpenWorld" });
     this.canMove = true;
-    this.playerSpeed = 80;
+    // default speed is 80
+    this.playerSpeed = 250;
   }
 
   init() {}
@@ -28,11 +29,11 @@ class OpenWorld extends Phaser.Scene {
 
     // map
     const map = this.make.tilemap({ key: "map" });
-    const tileset = map.addTilesetImage("tileset", "tiles");
+    const tileset = map.addTilesetImage("outside", "tiles");
 
     const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
-    const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
-    worldLayer.setCollisionByProperty({ collides: true });
+    const treeLayer = map.createStaticLayer("Trees", tileset, 0, 0);
+    treeLayer.setCollisionByProperty({ collides: true });
 
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
     // worldLayer.renderDebug(debugGraphics, {
@@ -42,7 +43,7 @@ class OpenWorld extends Phaser.Scene {
     // });
 
     // player
-    this.player = this.physics.add.sprite(50, 100, "player", 1);
+    this.player = this.physics.add.sprite(150, 150, "player", 1);
     this.physics.world.bounds.width = map.widthInPixels;
     this.physics.world.bounds.height = map.heightInPixels;
     this.player.setCollideWorldBounds(true);
@@ -54,7 +55,7 @@ class OpenWorld extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
     this.cameras.main.roundPixels = true;
 
-    this.physics.add.collider(this.player, worldLayer);
+    this.physics.add.collider(this.player, treeLayer);
 
     this.anims.create({
       key: "left",
@@ -130,14 +131,12 @@ class OpenWorld extends Phaser.Scene {
     this.input.keyboard.on("keydown_Z", () => {
       this.input.keyboard.removeAllListeners();
       plugin.toggleWindow(false);
-      this.canMove = true;
     });
     this.input.keyboard.on("keydown_X", () => {
       if (counter === dialogue.length) {
         this.input.keyboard.removeAllListeners();
 
         plugin.toggleWindow(false);
-        this.canMove = true;
       } else {
         plugin.setText(dialogue[counter], true);
         counter++;
