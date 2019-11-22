@@ -54,10 +54,12 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     return this.scene.sys.game.config.height;
   }
 
+  //  returns x offset value when camera moves
   getCameraX() {
     let x = this.getGameWidth() / 2 - this.scene.cameras.main.midPoint.x;
     return x > 0 ? 0 : x;
   }
+  //  returns y offset value when camera moves
 
   getCameraY() {
     const y = this.getGameHeight() / 2 - this.scene.cameras.main.midPoint.y;
