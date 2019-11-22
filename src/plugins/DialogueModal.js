@@ -131,7 +131,6 @@ class DialogueModal extends Phaser.Plugins.BasePlugin {
     this.toggleWindow(false);
     if (this.timedEvent) this.timedEvent.remove();
     if (this.text) this.text.destroy();
-    this.scene.canMove = true;
   }
 
   createCloseModalButtonBorder() {

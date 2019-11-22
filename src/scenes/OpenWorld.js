@@ -8,6 +8,7 @@ class OpenWorld extends Phaser.Scene {
   constructor() {
     super({ key: "OpenWorld" });
     this.canMove = true;
+    this.playerSpeed = 80;
   }
 
   init() {}
@@ -129,6 +130,7 @@ class OpenWorld extends Phaser.Scene {
     this.input.keyboard.on("keydown_Z", () => {
       this.input.keyboard.removeAllListeners();
       plugin.toggleWindow(false);
+      this.canMove = true;
     });
     this.input.keyboard.on("keydown_X", () => {
       if (counter === dialogue.length) {
@@ -145,24 +147,24 @@ class OpenWorld extends Phaser.Scene {
 
   update(time, delta) {
     // console.log(this.cameras.main.midPoint);
-    if (this.canMove) {
-      this.player.body.setVelocity(0);
+    this.player.body.setVelocity(0);
 
+    if (this.canMove) {
       // Horizontal movement
       if (this.cursors.left.isDown) {
-        this.player.body.setVelocityX(-80);
+        this.player.body.setVelocityX(-1 * this.playerSpeed);
         this.player.anims.play("left", true);
       } else if (this.cursors.right.isDown) {
-        this.player.body.setVelocityX(80);
+        this.player.body.setVelocityX(this.playerSpeed);
         this.player.anims.play("right", true);
       }
 
       // Vertical movement
       else if (this.cursors.up.isDown) {
-        this.player.body.setVelocityY(-80);
+        this.player.body.setVelocityY(-1 * this.playerSpeed);
         this.player.anims.play("up", true);
       } else if (this.cursors.down.isDown) {
-        this.player.body.setVelocityY(80);
+        this.player.body.setVelocityY(this.playerSpeed);
         this.player.anims.play("down", true);
       } else {
       }
