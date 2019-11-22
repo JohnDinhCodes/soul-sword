@@ -21,19 +21,28 @@ class OpenWorld extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32
     });
-    // this.load.plugin("dialogueModal", dialogueModal, false);
   }
 
   create() {
-    // plugin.init({ scene: this });
+    // plugin
+    const dialogueModalPlugin = this.plugins.install(
+      "dialogueModal",
+      dialogueModal,
+      true,
+      "dialogueModal",
+      {
+        scene: this
+      }
+    );
 
     // map
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("outside", "tiles");
 
     const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
-    const treeLayer = map.createStaticLayer("Trees", tileset, 0, 0);
-    treeLayer.setCollisionByProperty({ collides: true });
+    const obstaclesLayer = map.createStaticLayer("Obstacles", tileset, 0, 0);
+
+    obstaclesLayer.setCollisionByProperty({ collides: true });
 
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
     // worldLayer.renderDebug(debugGraphics, {
@@ -43,10 +52,29 @@ class OpenWorld extends Phaser.Scene {
     // });
 
     // player
-    this.player = this.physics.add.sprite(150, 150, "player", 1);
+    // const spawnPoint = map.findObject(
+    //   "Objects",
+    //   obj => obj.name === "Spawn Point"
+    // );
+
+    const spawnPoint = map.findObject(
+      "Spawn Point",
+      obj => obj.name === "Spawn Point"
+    );
+    console.log(spawnPoint);
+
+    this.player = this.physics.add.sprite(
+      spawnPoint.x,
+      spawnPoint.y,
+      "player",
+      1
+    );
     this.physics.world.bounds.width = map.widthInPixels;
     this.physics.world.bounds.height = map.heightInPixels;
     this.player.setCollideWorldBounds(true);
+
+    const treeLayer = map.createStaticLayer("Trees", tileset, 0, 0);
+    treeLayer.setCollisionByProperty({ collides: true });
 
     // cursors
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -55,7 +83,7 @@ class OpenWorld extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
     this.cameras.main.roundPixels = true;
 
-    this.physics.add.collider(this.player, treeLayer);
+    this.physics.add.collider(this.player, [treeLayer, obstaclesLayer]);
 
     this.anims.create({
       key: "left",
@@ -88,13 +116,6 @@ class OpenWorld extends Phaser.Scene {
       }),
       frameRate: 10
     });
-    let dialogueModalPlugin = this.plugins.install(
-      "dialogueModal",
-      dialogueModal,
-      true,
-      "dialogueModal",
-      { scene: this }
-    );
 
     // Initial RPG Tutorial
     this.dialoguePlayer(
@@ -135,7 +156,7 @@ class OpenWorld extends Phaser.Scene {
     this.input.keyboard.on("keydown_X", () => {
       if (counter === dialogue.length) {
         this.input.keyboard.removeAllListeners();
-
+        this.canMove = true;
         plugin.toggleWindow(false);
       } else {
         plugin.setText(dialogue[counter], true);
