@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import Loading from "./scenes/Loading";
 import HomeTown from "./scenes/HomeTown";
 

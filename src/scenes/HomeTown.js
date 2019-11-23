@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import tilesetFile from "../assets/maps/tilesets/outside.png";
 import tilemapJSONFile from "../assets/maps/HomeTown/HomeTown.json";
 import playerSpritesheetFile from "../assets/player.png";
