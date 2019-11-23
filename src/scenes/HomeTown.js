@@ -26,7 +26,6 @@ class HomeTown extends Phaser.Scene {
 		 ***********************************/
 		const dialogueModalPlugin = this.dialogueModal;
 		const characterMovementPlugin = this.characterMovement;
-		characterMovementPlugin.init();
 
 		/**********************************
 		 *               Map
@@ -48,25 +47,28 @@ class HomeTown extends Phaser.Scene {
 		/**********************************
 		 *             Player
 		 ***********************************/
-
-		// Spawn player
-		characterMovementPlugin.spawnCharacter('player', playerSpawnPoint.x, playerSpawnPoint.y, 1);
-
-		// Creating player keys to manipulate
-		this.player.canMove = true;
-		this.player.speed = 80;
-
-		const playerAnims = {
-			character: 'player',
+		const playerData = {
+			characterKey: 'player',
 			animsKeys: {
 				left: [3, 4, 5, 4],
 				right: [6, 7, 8, 7],
 				up: [9, 10, 11, 10],
 				down: [0, 1, 2, 1],
 			},
+			spawnData: {
+				x: playerSpawnPoint.x,
+				y: playerSpawnPoint.y,
+				initialFrame: 1,
+			},
 		};
 
-		characterMovementPlugin.createAnims(playerAnims);
+		characterMovementPlugin.init(playerData);
+
+		// Creating player keys to manipulate
+		this.player.canMove = true;
+		this.player.speed = 80;
+
+		// characterMovementPlugin.createAnims(playerAnims);
 
 		/**********************************
 		 *   Map Layers Above Characters

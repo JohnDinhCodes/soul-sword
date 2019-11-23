@@ -4,23 +4,27 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 		super(scene, pluginManager);
 	}
 
-	init() {
+	// Spawn and setup main player in scene
+	init({ characterKey, animsKeys, spawnData }) {
 		// Creates cursors for your scene
 		this.scene.cursors = this.scene.input.keyboard.createCursorKeys();
-		console.log(this.scene.cursors);
+
+		// Spawns Main Player
+		this.spawnCharacter(characterKey, spawnData);
+
+		// Initializes animations for Main Player
+		this.createAnims(characterKey, animsKeys);
 	}
 
-	spawnCharacter(characterKey, x, y, initialFrame) {
+	spawnCharacter(characterKey, { x, y, initialFrame }) {
 		this.scene[characterKey] = this.scene.physics.add.sprite(x, y, characterKey, initialFrame);
 	}
 
-	createAnims({ character, animsKeys }) {
-		// might not need this line
-		if (!this[character]) this[character] = character;
+	createAnims(characterKey, animsKeys) {
 		for (let animsKey in animsKeys) {
 			this.scene.anims.create({
 				key: animsKey,
-				frames: this.scene.anims.generateFrameNames(character, {
+				frames: this.scene.anims.generateFrameNames(characterKey, {
 					frames: animsKeys[animsKey],
 				}),
 				frameRate: 10,
