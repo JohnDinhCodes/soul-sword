@@ -157,7 +157,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
     if (this.closeBtn) this.closeBtn.visible = this.visible;
   }
 
-  setText(text, animate) {
+  setText(text, animate = true) {
     this.eventCounter = 0;
     this.dialogue = text.split("");
     if (this.timedEvent) this.timedEvent.remove();

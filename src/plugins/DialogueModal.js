@@ -5,6 +5,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
   boot() {
     const eventEmitter = this.systems.events;
+    eventEmitter.once("shutdown", this.shutdown, this);
     eventEmitter.once("destroy", this.destroy, this);
   }
 
@@ -44,7 +45,10 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
     this.createWindow();
   }
 
-  destroy() {}
+  shutdown() {
+    if (this.timedEvent) this.timedEvent.remove();
+    if (this.text) this.text.destroy();
+  }
 
   // Gets the width of the game (based on the scene)
   getGameWidth() {
@@ -98,6 +102,110 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
     this.graphics.strokeRect(x, y, rectWidth, rectHeight);
   }
 
+  // Creates the close dialogue window button
+  createCloseModalButton() {
+    this.closeBtn = this.scene.make.text({
+      x: this.getGameWidth() - this.padding - 14 - this.getCameraX(),
+      y:
+        this.getGameHeight() -
+        this.windowHeight -
+        this.padding +
+        3 -
+        this.getCameraY(),
+      text: "X",
+      style: {
+        font: "bold 12px Arial",
+        fill: this.closeBtnColor
+      }
+    });
+    this.closeBtn.setInteractive();
+
+    this.closeBtn.on("pointerover", function() {
+      this.setTint(0xff0000);
+    });
+
+    this.closeBtn.on("pointerout", function() {
+      this.clearTint();
+    });
+    this.closeBtn.on("pointerdown", () => {
+      this.closeWindow();
+      if (this.timedEvent) this.timedEvent.remove();
+      if (this.text) this.text.destroy();
+    });
+  }
+
+  // Creates the close dialogue button border
+  createCloseModalButtonBorder() {
+    const x = this.getGameWidth() - this.padding - 20 - this.getCameraX();
+    const y =
+      this.getGameHeight() -
+      this.windowHeight -
+      this.padding -
+      this.getCameraY();
+    this.graphics.strokeRect(x, y, 20, 20);
+  }
+
+  // Hide/Show the dialogue window
+  closeWindow() {
+    this.visible = false;
+    if (this.text) this.text.visible = false;
+    if (this.graphics) this.graphics.visible = false;
+    if (this.closeBtn) this.closeBtn.visible = false;
+  }
+
+  // Sets the text for the dialogue window
+  setText(text, animate = true) {
+    // Reset the dialogue
+    this.eventCounter = 0;
+    this.dialogue = text.split("");
+    if (this.timedEvent) this.timedEvent.remove();
+
+    const tempText = animate ? "" : text;
+    this._setText(tempText);
+
+    if (animate) {
+      this.timedEvent = this.scene.time.addEvent({
+        delay: 150 - this.dialogueSpeed * 30,
+        callback: this.animateText,
+        callbackScope: this,
+        loop: true
+      });
+    }
+  }
+
+  _setText(text) {
+    // Reset the dialogue
+    if (this.text) this.text.destroy();
+
+    const x = this.padding + 10 - this.getCameraX();
+    const y =
+      this.getGameHeight() -
+      this.windowHeight -
+      this.padding +
+      10 -
+      this.getCameraY();
+
+    this.text = this.scene.make.text({
+      x,
+      y,
+      text,
+      style: {
+        wordWrap: {
+          width: this.getGameWidth() - this.padding * 2 - 25
+        }
+      }
+    });
+  }
+
+  // Slowly displays the text in the window to make it appear annimated
+  animateText() {
+    this.eventCounter++;
+    this.text.setText(this.text.text + this.dialogue[this.eventCounter - 1]);
+    if (this.eventCounter === this.dialogue.length) {
+      this.timedEvent.remove();
+    }
+  }
+
   // Creates the dialogue window
   createWindow() {
     const gameHeight = this.getGameHeight();
@@ -107,6 +215,9 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
     this.createOuterWindow(dimensions);
     this.createInnerWindow(dimensions);
+
+    this.createCloseModalButton();
+    this.createCloseModalButtonBorder();
   }
 }
 
