@@ -51,12 +51,6 @@ class OpenWorld extends Phaser.Scene {
     //   faceColor: new Phaser.Display.Color(40, 39, 37, 255)
     // });
 
-    // player
-    // const spawnPoint = map.findObject(
-    //   "Objects",
-    //   obj => obj.name === "Spawn Point"
-    // );
-
     const spawnPoint = map.findObject(
       "Spawn Point",
       obj => obj.name === "Spawn Point"
@@ -129,19 +123,6 @@ class OpenWorld extends Phaser.Scene {
       ],
       dialogueModalPlugin
     );
-    setTimeout(() => {
-      this.dialoguePlayer(
-        [
-          "Your 'X' key is used for confirming actions.\nTry pressing 'X' to continue.",
-          "You can move around with your keyboard's arrow keys.",
-          "Your 'Z' key is used for closing and canceling actions.",
-          "You can skip dialogue completely by pressing the 'Z' key.",
-          "When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
-          "You can always replay this by talking to the old man in (insert home village here)"
-        ],
-        dialogueModalPlugin
-      );
-    }, 5000);
   }
 
   dialoguePlayer([...dialogue], plugin) {
@@ -165,7 +146,35 @@ class OpenWorld extends Phaser.Scene {
     });
   }
 
+  autoMovement(person, direction = "left") {
+    if (direction === "left") {
+      if (person.body.x > 100) {
+        person.body.x -= 1;
+        this.player.anims.play("left", true);
+        console.log(person.body.x);
+      } else {
+        direction = "down";
+      }
+    } else if (direction === "down") {
+      if (person.body.y < 700) {
+        person.body.y += 1;
+        person.anims.play("down", true);
+      } else {
+        direction = "right";
+      }
+    } else if (direction === "right") {
+      if (person.body.x < 480) {
+        person.body.x += 1;
+        this.player.anims.play("right", true);
+      } else {
+        direction = "up";
+      }
+    }
+  }
+
   update(time, delta) {
+    this.autoMovement(this.player);
+
     // console.log(this.cameras.main.midPoint);
     this.player.body.setVelocity(0);
 
