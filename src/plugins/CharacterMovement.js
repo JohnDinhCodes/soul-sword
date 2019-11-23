@@ -31,6 +31,28 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 			});
 		}
 	}
+
+	playerControls(player) {
+		player.body.setVelocity(0);
+		// Horizontal movement
+		if (this.scene.cursors.left.isDown) {
+			player.body.setVelocityX(-1 * player.speed);
+			player.anims.play('left', true);
+		} else if (this.scene.cursors.right.isDown) {
+			player.body.setVelocityX(player.speed);
+			player.anims.play('right', true);
+		}
+
+		// Vertical movement
+		else if (this.scene.cursors.up.isDown) {
+			player.body.setVelocityY(-1 * player.speed);
+			player.anims.play('up', true);
+		} else if (this.scene.cursors.down.isDown) {
+			player.body.setVelocityY(player.speed);
+			player.anims.play('down', true);
+		} else {
+		}
+	}
 }
 
 export default CharacterMovement;

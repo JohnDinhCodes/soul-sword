@@ -24,8 +24,8 @@ class HomeTown extends Phaser.Scene {
 		/**********************************
 		 *             Plugin
 		 ***********************************/
-		const dialogueModalPlugin = this.dialogueModal;
-		const characterMovementPlugin = this.characterMovement;
+		const dialoguePlugin = this.dialogueModal;
+		const movementPlugin = this.characterMovement;
 
 		/**********************************
 		 *               Map
@@ -62,13 +62,11 @@ class HomeTown extends Phaser.Scene {
 			},
 		};
 
-		characterMovementPlugin.init(playerData);
+		movementPlugin.init(playerData);
 
 		// Creating player keys to manipulate
 		this.player.canMove = true;
 		this.player.speed = 80;
-
-		// characterMovementPlugin.createAnims(playerAnims);
 
 		/**********************************
 		 *   Map Layers Above Characters
@@ -86,32 +84,22 @@ class HomeTown extends Phaser.Scene {
 		/**********************************
 		 *        Physics Collision
 		 ***********************************/
+
+		// Collision with world boundaries
 		this.physics.world.bounds.width = map.widthInPixels;
 		this.physics.world.bounds.height = map.heightInPixels;
 		this.player.setCollideWorldBounds(true);
+
+		// Collision with map layers
+		this.physics.add.collider(this.player, [treeLayer, obstaclesLayer]);
+
+		dialoguePlugin.init();
+		dialoguePlugin.playDialogue(['hi there', 'goodbye']);
 	}
 
 	update(time, delta) {
-		this.player.body.setVelocity(0);
 		if (this.player.canMove) {
-			// Horizontal movement
-			if (this.cursors.left.isDown) {
-				this.player.body.setVelocityX(-1 * this.player.speed);
-				this.player.anims.play('left', true);
-			} else if (this.cursors.right.isDown) {
-				this.player.body.setVelocityX(this.player.speed);
-				this.player.anims.play('right', true);
-			}
-
-			// Vertical movement
-			else if (this.cursors.up.isDown) {
-				this.player.body.setVelocityY(-1 * this.player.speed);
-				this.player.anims.play('up', true);
-			} else if (this.cursors.down.isDown) {
-				this.player.body.setVelocityY(this.player.speed);
-				this.player.anims.play('down', true);
-			} else {
-			}
+			this.characterMovement.playerControls(this.player);
 		}
 	}
 }
