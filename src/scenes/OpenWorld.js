@@ -9,7 +9,7 @@ class OpenWorld extends Phaser.Scene {
     super({ key: "OpenWorld" });
     this.canMove = true;
     // default speed is 80
-    this.playerSpeed = 250;
+    this.playerSpeed = 80;
   }
 
   init() {}
@@ -146,34 +146,34 @@ class OpenWorld extends Phaser.Scene {
     });
   }
 
-  autoMovement(person, direction = "left") {
-    if (direction === "left") {
-      if (person.body.x > 100) {
-        person.body.x -= 1;
-        this.player.anims.play("left", true);
-        console.log(person.body.x);
-      } else {
-        direction = "down";
-      }
-    } else if (direction === "down") {
-      if (person.body.y < 700) {
-        person.body.y += 1;
-        person.anims.play("down", true);
-      } else {
-        direction = "right";
-      }
-    } else if (direction === "right") {
-      if (person.body.x < 480) {
-        person.body.x += 1;
-        this.player.anims.play("right", true);
-      } else {
-        direction = "up";
-      }
-    }
-  }
+  // autoMovement(person, direction = "left") {
+  //   if (direction === "left") {
+  //     if (person.body.x > 100) {
+  //       person.body.x -= 1;
+  //       this.player.anims.play("left", true);
+  //       console.log(person.body.x);
+  //     } else {
+  //       direction = "down";
+  //     }
+  //   } else if (direction === "down") {
+  //     if (person.body.y < 700) {
+  //       person.body.y += 1;
+  //       person.anims.play("down", true);
+  //     } else {
+  //       direction = "right";
+  //     }
+  //   } else if (direction === "right") {
+  //     if (person.body.x < 480) {
+  //       person.body.x += 1;
+  //       this.player.anims.play("right", true);
+  //     } else {
+  //       direction = "up";
+  //     }
+  //   }
+  // }
 
   update(time, delta) {
-    this.autoMovement(this.player);
+    // this.autoMovement(this.player);
 
     // console.log(this.cameras.main.midPoint);
     this.player.body.setVelocity(0);
