@@ -5,21 +5,25 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// Spawn and setup main player in scene
-	init({ characterKey, animsKeys, spawnData }) {
+	init(playerData) {
 		// Creates cursors for your scene
 		this.scene.cursors = this.scene.input.keyboard.createCursorKeys();
 
-		// Spawns Main Player
-		this.spawnCharacter(characterKey, spawnData);
-
-		// Initializes animations for Main Player
-		this.createAnims(characterKey, animsKeys);
+		this.createCharacter(playerData);
 	}
 
+	// Spawns character at X, Y coordinate with an initial frame
 	spawnCharacter(characterKey, { x, y, initialFrame }) {
-		this.scene[characterKey] = this.scene.physics.add.sprite(x, y, characterKey, initialFrame);
+		if (characterKey === 'player') {
+			this.scene[characterKey] = this.scene.physics.add.sprite(x, y, characterKey, initialFrame);
+		} else {
+			// Adds NPC to scene's NPC array and makes them immovable
+			this.scene.NPCs.push(this.scene.physics.add.sprite(x, y, characterKey, initialFrame));
+			this.scene.NPCs[this.scene.NPCs.length - 1].body.immovable = true;
+		}
 	}
 
+	// Create character animation
 	createAnims(characterKey, animsKeys) {
 		for (let animsKey in animsKeys) {
 			this.scene.anims.create({
@@ -32,6 +36,7 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 		}
 	}
 
+	// Function to be called in Phaser.Scene's update method
 	playerControls(player) {
 		player.body.setVelocity(0);
 		// Horizontal movement
@@ -52,6 +57,12 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 			player.anims.play('down', true);
 		} else {
 		}
+	}
+
+	// Creates NPCs
+	createCharacter({ characterKey, spawnData, animsKeys }) {
+		this.spawnCharacter(characterKey, spawnData);
+		this.createAnims(characterKey, animsKeys);
 	}
 }
 

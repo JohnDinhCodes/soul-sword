@@ -1,12 +1,17 @@
+// Map Assets
 import tilesetFile from '../assets/maps/tilesets/outside.png';
 import tilemapJSONFile from '../assets/maps/HomeTown/HomeTown.json';
+// Character Sprites
 import playerSpritesheetFile from '../assets/player.png';
+import lumberjackSpritesheetFile from '../assets/lumberjack.png';
+// Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
 import characterMovementPlugin from '../plugins/CharacterMovement';
 
 class HomeTown extends Phaser.Scene {
 	constructor() {
 		super({ key: 'HomeTown' });
+		this.NPCs = [];
 	}
 
 	preload() {
@@ -16,16 +21,31 @@ class HomeTown extends Phaser.Scene {
 			frameWidth: 32,
 			frameHeight: 32,
 		});
+		this.load.spritesheet('lumberjack', lumberjackSpritesheetFile, {
+			frameHeight: 32,
+			frameWidth: 32,
+		});
 		this.load.scenePlugin('dialogueModal', dialogueModalPlugin);
 		this.load.scenePlugin('characterMovement', characterMovementPlugin);
 	}
 
 	create() {
 		/**********************************
+		 *            Constants
+		 ***********************************/
+		const animsKeys = {
+			left: [3, 4, 5, 4],
+			right: [6, 7, 8, 7],
+			up: [9, 10, 11, 10],
+			down: [0, 1, 2, 1],
+		};
+
+		/**********************************
 		 *             Plugin
 		 ***********************************/
 		const dialoguePlugin = this.dialogueModal;
 		const movementPlugin = this.characterMovement;
+		dialoguePlugin.init();
 
 		/**********************************
 		 *               Map
@@ -43,18 +63,14 @@ class HomeTown extends Phaser.Scene {
 
 		// Spawn Points from map
 		const playerSpawnPoint = map.findObject('Player Spawn Point', obj => obj.name === 'Player Spawn Point');
+		const lumberjackSpawnPoint = map.findObject('Lumberjack', obj => obj.name === 'Lumberjack');
 
 		/**********************************
 		 *             Player
 		 ***********************************/
 		const playerData = {
 			characterKey: 'player',
-			animsKeys: {
-				left: [3, 4, 5, 4],
-				right: [6, 7, 8, 7],
-				up: [9, 10, 11, 10],
-				down: [0, 1, 2, 1],
-			},
+			animsKeys: animsKeys,
 			spawnData: {
 				x: playerSpawnPoint.x,
 				y: playerSpawnPoint.y,
@@ -67,6 +83,20 @@ class HomeTown extends Phaser.Scene {
 		// Creating player keys to manipulate
 		this.player.canMove = true;
 		this.player.speed = 80;
+
+		/**********************************
+		 *              NPCs
+		 ***********************************/
+		const lumberjackData = {
+			characterKey: 'lumberjack',
+			animsKeys: animsKeys,
+			spawnData: {
+				x: lumberjackSpawnPoint.x,
+				y: lumberjackSpawnPoint.y,
+				initialFrame: 7,
+			},
+		};
+		movementPlugin.createCharacter(lumberjackData);
 
 		/**********************************
 		 *   Map Layers Above Characters
@@ -93,8 +123,20 @@ class HomeTown extends Phaser.Scene {
 		// Collision with map layers
 		this.physics.add.collider(this.player, [treeLayer, obstaclesLayer]);
 
-		dialoguePlugin.init();
-		dialoguePlugin.playDialogue(['hi there', 'goodbye']);
+		// Loops through all
+		this.physics.add.collider(this.player, this.NPCs);
+
+		/**********************************
+		 *            Dialogue
+		 ***********************************/
+		dialoguePlugin.playDialogue([
+			"Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
+			"You can move around with your keyboard's arrow keys.",
+			"Your 'Z' key is used for closing and canceling actions.",
+			"You can skip dialogue completely by pressing the 'Z' key.",
+			"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+			'You can always replay this by talking to the old man in (insert home village here)',
+		]);
 	}
 
 	update(time, delta) {
