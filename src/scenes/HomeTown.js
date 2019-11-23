@@ -71,9 +71,11 @@ class HomeTown extends Phaser.Scene {
      ***********************************/
     const dialogueModalPlugin = this.dialogueModal;
     dialogueModalPlugin.init();
-    dialogueModalPlugin.setText(
-      "testing this thing out if it works and if it doesnt i guess i'm going to have to code some more"
-    );
+    dialogueModalPlugin.playDialogue([
+      "testing this thing out if it works and if it doesnt i guess i'm going to have to code some more",
+      "okay so this is the second line in the dialogue",
+      "hello world, this is the third line"
+    ]);
   }
 }
 

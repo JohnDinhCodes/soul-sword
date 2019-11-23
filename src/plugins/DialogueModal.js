@@ -41,8 +41,6 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
     this.dialogue;
     this.graphics;
     this.closeBtn;
-
-    this.createWindow();
   }
 
   shutdown() {
@@ -129,8 +127,6 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
     });
     this.closeBtn.on("pointerdown", () => {
       this.closeWindow();
-      if (this.timedEvent) this.timedEvent.remove();
-      if (this.text) this.text.destroy();
     });
   }
 
@@ -151,6 +147,12 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
     if (this.text) this.text.visible = false;
     if (this.graphics) this.graphics.visible = false;
     if (this.closeBtn) this.closeBtn.visible = false;
+    if (this.timedEvent) this.timedEvent.remove();
+    if (this.text) this.text.destroy();
+
+    // Sets player's canMove value to true.
+    // (Make sure you set your player's spritesheet key to "player")
+    this.scene.player.canMove = true;
   }
 
   // Sets the text for the dialogue window
@@ -218,6 +220,33 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
     this.createCloseModalButton();
     this.createCloseModalButtonBorder();
+  }
+
+  playDialogue([...text]) {
+    // Set player's canMove value to false
+    this.scene.player.canMove = false;
+    let dialogueIndex = 1;
+    this.createWindow();
+    // Automatically play first line in dialogue array
+    this.setText(text[0]);
+
+    // Closes window when Z key is pressed
+    // (Map this to anything you want)
+    this.scene.input.keyboard.on("keydown_Z", () => {
+      this.scene.input.keyboard.removeAllListeners();
+      this.closeWindow();
+    });
+
+    this.scene.input.keyboard.on("keydown_X", () => {
+      if (dialogueIndex === text.length) {
+        this.scene.input.keyboard.removeAllListeners();
+        this.canMove = true;
+        this.closeWindow();
+      } else {
+        this.setText(text[dialogueIndex]);
+        dialogueIndex++;
+      }
+    });
   }
 }
 
