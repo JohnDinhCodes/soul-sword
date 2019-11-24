@@ -34,10 +34,10 @@ class HomeTown extends Phaser.Scene {
 		 *            Constants
 		 ***********************************/
 		const animsKeys = {
-			left: [3, 4, 5, 4],
-			right: [6, 7, 8, 7],
-			up: [9, 10, 11, 10],
-			down: [0, 1, 2, 1],
+			Left: [3, 4, 5, 4],
+			Right: [6, 7, 8, 7],
+			Up: [9, 10, 11, 10],
+			Down: [0, 1, 2, 1],
 		};
 
 		/**********************************
@@ -79,7 +79,6 @@ class HomeTown extends Phaser.Scene {
 		};
 
 		movementPlugin.init(playerData);
-
 		// Creating player keys to manipulate
 		this.player.canMove = true;
 		this.player.speed = 80;
@@ -122,9 +121,10 @@ class HomeTown extends Phaser.Scene {
 
 		// Collision with map layers
 		this.physics.add.collider(this.player, [treeLayer, obstaclesLayer]);
+		this.physics.add.collider(this.NPCs, [treeLayer, obstaclesLayer]);
 
-		// Loops through all
 		this.physics.add.collider(this.player, this.NPCs);
+		this.physics.add.collider(this.NPCs[0], this.player);
 
 		/**********************************
 		 *            Dialogue
@@ -137,9 +137,12 @@ class HomeTown extends Phaser.Scene {
 			"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
 			'You can always replay this by talking to the old man in (insert home village here)',
 		]);
+		this.NPCs[0].speed = 80;
 	}
 
 	update(time, delta) {
+		this.player.setVelocity(0);
+		this.characterMovement.npcMovement(this.NPCs[0]);
 		if (this.player.canMove) {
 			this.characterMovement.playerControls(this.player);
 		}
