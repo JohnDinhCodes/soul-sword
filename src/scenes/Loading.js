@@ -10,7 +10,7 @@ class Loading extends Phaser.Scene {
   preload() {}
 
   create() {
-    this.scene.start("OpenWorld");
+    this.scene.start("HomeTown");
   }
 
   update(time, delta) {}

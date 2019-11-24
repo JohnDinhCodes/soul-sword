@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import tilesetFile from "../assets/maps/tilesets/outside.png";
 import tilemapJSONFile from "../assets/maps/HomeTown/HomeTown.json";
 import playerSpritesheetFile from "../assets/player.png";
@@ -21,19 +20,26 @@ class OpenWorld extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32
     });
+    this.load.scenePlugin(
+      "dialogueModal",
+      dialogueModal,
+      "dialogueModal",
+      "dialogueModal"
+    );
   }
 
   create() {
+    const dialogueModalPlugin = this.dialogueModal;
     // plugin
-    const dialogueModalPlugin = this.plugins.install(
-      "dialogueModal",
-      dialogueModal,
-      true,
-      "dialogueModal",
-      {
-        scene: this
-      }
-    );
+    // const dialogueModalPlugin = this.plugins.install(
+    //   "dialogueModal",
+    //   dialogueModal,
+    //   true,
+    //   "dialogueModal",
+    //   {
+    //     scene: this
+    //   }
+    // );
 
     // map
     const map = this.make.tilemap({ key: "map" });

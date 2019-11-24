@@ -1,7 +1,5 @@
-import Phaser from "phaser";
 import Loading from "./scenes/Loading";
-import OpenWorld from "./scenes/OpenWorld";
-import DialogueModal from "./plugins/DialogueModal";
+import HomeTown from "./scenes/HomeTown";
 
 const config = {
   width: 400,
@@ -9,7 +7,7 @@ const config = {
   zoom: 2,
   type: Phaser.AUTO,
   parent: "game",
-  scene: [Loading, OpenWorld],
+  scene: [Loading, HomeTown],
   title: "Soul Sword",
   version: "0.0.1 BETA",
   autoFocus: true,
