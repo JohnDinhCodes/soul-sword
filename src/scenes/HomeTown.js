@@ -95,7 +95,15 @@ class HomeTown extends Phaser.Scene {
 				initialFrame: 7,
 			},
 		};
-		movementPlugin.createCharacter(lumberjackData);
+
+		const testObj = [
+			{ direction: 'right', value: 40 },
+			{ direction: 'up', value: 80 },
+			{ direction: 'left', value: 40 },
+			{ direction: 'down', value: 80 },
+		];
+
+		const lumberjackIndex = movementPlugin.createCharacter(lumberjackData);
 
 		/**********************************
 		 *   Map Layers Above Characters
@@ -137,12 +145,16 @@ class HomeTown extends Phaser.Scene {
 			"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
 			'You can always replay this by talking to the old man in (insert home village here)',
 		]);
-		this.NPCs[0].speed = 80;
 	}
 
 	update(time, delta) {
 		this.player.setVelocity(0);
-		this.characterMovement.npcMovement(this.NPCs[0]);
+		this.characterMovement.npcMovement(this.NPCs[0], [
+			{ direction: 'right', value: 40 },
+			{ direction: 'up', value: 75 },
+			{ direction: 'left', value: 50 },
+			{ direction: 'down', value: 250 },
+		]);
 		if (this.player.canMove) {
 			this.characterMovement.playerControls(this.player);
 		}
