@@ -126,7 +126,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// Hide/Show the dialogue window
-	closeWindow() {
+	closeWindow(obj) {
 		this.visible = false;
 		if (this.text) this.text.visible = false;
 		if (this.graphics) this.graphics.visible = false;
@@ -137,6 +137,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		// Sets player's canMove value to true.
 		// (Make sure you set your player's spritesheet key to "player")
 		this.scene.player.canMove = true;
+		if (obj) obj.canMove = true;
 	}
 
 	// Sets the text for the dialogue window
@@ -201,9 +202,10 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.createCloseModalButtonBorder();
 	}
 
-	playDialogue([...text]) {
+	playDialogue([...text], obj) {
 		// Set player's canMove value to false
 		this.scene.player.canMove = false;
+		if (obj) obj.canMove = false;
 		let dialogueIndex = 1;
 		this.createWindow();
 		// Automatically play first line in dialogue array
@@ -212,19 +214,17 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		// Closes window when Z key is pressed
 		// (Map this to anything you want)
 		this.scene.input.keyboard.on('keydown_Z', () => {
-			this.scene.input.keyboard.removeAllListeners();
+			dialogueIndex = text.length;
 			this.closeWindow();
 		});
 
 		this.closeBtn.on('pointerdown', () => {
-			this.scene.input.keyboard.removeAllListeners();
+			dialogueIndex = text.length;
 			this.closeWindow();
 		});
 
 		this.scene.input.keyboard.on('keydown_X', () => {
 			if (dialogueIndex === text.length) {
-				this.scene.input.keyboard.removeAllListeners();
-				this.canMove = true;
 				this.closeWindow();
 			} else {
 				this.setText(text[dialogueIndex]);

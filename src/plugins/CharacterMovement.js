@@ -19,6 +19,7 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 			// Adds NPC to scene's NPC array and makes them immovable
 			this.scene.NPCs.push(this.scene.physics.add.sprite(x, y, characterKey, initialFrame));
 			this.scene.NPCs[this.scene.NPCs.length - 1].body.movable = false;
+			this.scene.NPCs[this.scene.NPCs.length - 1].canMove = true;
 			this.scene.NPCs[this.scene.NPCs.length - 1].speed = 40;
 			this.scene.NPCs[characterKey] = this.scene.NPCs.length - 1;
 		}
@@ -59,29 +60,31 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 		const direction = data[npc.moveIndex].direction;
 		const distance = data[npc.moveIndex].value;
 
-		if (direction === 'right') {
-			this.scene.physics.moveTo(npc, npc.startX + distance, npc.startY, 30);
-			npc.anims.play(npcKey + 'Right', true);
-			if (Math.floor(npc.x) === Math.floor(npc.startX + distance)) {
-				this.setTurnCoords(npc, data.length);
-			}
-		} else if (direction === 'up') {
-			this.scene.physics.moveTo(npc, npc.startX, npc.startY - distance, 30);
-			npc.anims.play(npcKey + 'Up', true);
-			if (Math.floor(npc.y) === Math.floor(npc.startY - distance)) {
-				this.setTurnCoords(npc, data.length);
-			}
-		} else if (direction === 'left') {
-			this.scene.physics.moveTo(npc, npc.startX - distance, npc.startY, 30);
-			npc.anims.play(npcKey + 'Left', true);
-			if (Math.floor(npc.x) === Math.floor(npc.startX - distance)) {
-				this.setTurnCoords(npc, data.length);
-			}
-		} else if (direction === 'down') {
-			this.scene.physics.moveTo(npc, npc.startX, npc.startY + distance, 30);
-			npc.anims.play(npcKey + 'Down', true);
-			if (Math.floor(npc.y) === Math.floor(npc.startY + distance)) {
-				this.setTurnCoords(npc, data.length);
+		if (npc.canMove) {
+			if (direction === 'right') {
+				this.scene.physics.moveTo(npc, npc.startX + distance, npc.startY, 30);
+				npc.anims.play(npcKey + 'Right', true);
+				if (Math.floor(npc.x) === Math.floor(npc.startX + distance)) {
+					this.setTurnCoords(npc, data.length);
+				}
+			} else if (direction === 'up') {
+				this.scene.physics.moveTo(npc, npc.startX, npc.startY - distance, 30);
+				npc.anims.play(npcKey + 'Up', true);
+				if (Math.floor(npc.y) === Math.floor(npc.startY - distance)) {
+					this.setTurnCoords(npc, data.length);
+				}
+			} else if (direction === 'left') {
+				this.scene.physics.moveTo(npc, npc.startX - distance, npc.startY, 30);
+				npc.anims.play(npcKey + 'Left', true);
+				if (Math.floor(npc.x) === Math.floor(npc.startX - distance)) {
+					this.setTurnCoords(npc, data.length);
+				}
+			} else if (direction === 'down') {
+				this.scene.physics.moveTo(npc, npc.startX, npc.startY + distance, 30);
+				npc.anims.play(npcKey + 'Down', true);
+				if (Math.floor(npc.y) === Math.floor(npc.startY + distance)) {
+					this.setTurnCoords(npc, data.length);
+				}
 			}
 		}
 	}
@@ -93,19 +96,22 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 		if (this.scene.cursors.left.isDown) {
 			player.body.setVelocityX(-1 * player.speed);
 			player.anims.play(player.texture.key + 'Left', true);
+			player.direction = 'left';
 		} else if (this.scene.cursors.right.isDown) {
 			player.body.setVelocityX(player.speed);
 			player.anims.play(player.texture.key + 'Right', true);
+			player.direction = 'right';
 		}
 
 		// Vertical movement
 		else if (this.scene.cursors.up.isDown) {
 			player.body.setVelocityY(-1 * player.speed);
 			player.anims.play(player.texture.key + 'Up', true);
+			player.direction = 'up';
 		} else if (this.scene.cursors.down.isDown) {
 			player.body.setVelocityY(player.speed);
 			player.anims.play(player.texture.key + 'Down', true);
-		} else {
+			player.direction = 'down';
 		}
 	}
 

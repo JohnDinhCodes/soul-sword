@@ -4,9 +4,11 @@ import tilemapJSONFile from '../assets/maps/HomeTown/HomeTown.json';
 // Character Sprites
 import playerSpritesheetFile from '../assets/player.png';
 import lumberjackSpritesheetFile from '../assets/lumberjack.png';
+import invisibleBlockFile from '../assets/invisible.png';
 // Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
 import characterMovementPlugin from '../plugins/CharacterMovement';
+import rangeDetectionPlugin from '../plugins/RangeDetection';
 
 class HomeTown extends Phaser.Scene {
 	constructor() {
@@ -25,8 +27,13 @@ class HomeTown extends Phaser.Scene {
 			frameHeight: 32,
 			frameWidth: 32,
 		});
+		this.load.spritesheet('invisibleBlock', invisibleBlockFile, {
+			frameHeight: 1,
+			frameWidth: 1,
+		});
 		this.load.scenePlugin('dialogueModal', dialogueModalPlugin);
 		this.load.scenePlugin('characterMovement', characterMovementPlugin);
+		this.load.scenePlugin('rangeDetection', rangeDetectionPlugin);
 	}
 
 	create() {
@@ -45,6 +52,8 @@ class HomeTown extends Phaser.Scene {
 		 ***********************************/
 		const dialoguePlugin = this.dialogueModal;
 		const movementPlugin = this.characterMovement;
+		const rangePlugin = this.rangeDetection;
+
 		dialoguePlugin.init();
 
 		/**********************************
@@ -78,7 +87,11 @@ class HomeTown extends Phaser.Scene {
 			},
 		};
 
+		// this.invisibleBlock = this.physics.add.sprite(0, 0, "invisibleBlock");
+		// this.invisibleBlock.setPosition()
 		movementPlugin.init(playerData);
+		rangePlugin.init('invisibleBlock', this.player);
+
 		// Creating player keys to manipulate
 		this.player.canMove = true;
 		this.player.speed = 80;
@@ -140,7 +153,8 @@ class HomeTown extends Phaser.Scene {
 	}
 
 	update(time, delta) {
-		this.player.setVelocity(0);
+		console.log(this.player.angle);
+		this.rangeDetection.setBlockPosition(this.player);
 		this.characterMovement.npcMovement(this.NPCs[this.NPCs.lumberjack], [
 			{ direction: 'right', value: 55 },
 			{ direction: 'left', value: 55 },
