@@ -520,7 +520,7 @@
   </data>
  </layer>
  <objectgroup id="9" name="Lumberjack">
-  <object id="4" name="Lumberjack" x="446.334" y="482.167">
+  <object id="4" name="Lumberjack" x="448" y="480.5">
    <point/>
   </object>
  </objectgroup>

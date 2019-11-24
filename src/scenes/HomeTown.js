@@ -95,14 +95,6 @@ class HomeTown extends Phaser.Scene {
 				initialFrame: 7,
 			},
 		};
-
-		const testObj = [
-			{ direction: 'right', value: 40 },
-			{ direction: 'up', value: 80 },
-			{ direction: 'left', value: 40 },
-			{ direction: 'down', value: 80 },
-		];
-
 		const lumberjackIndex = movementPlugin.createCharacter(lumberjackData);
 
 		/**********************************
@@ -149,11 +141,9 @@ class HomeTown extends Phaser.Scene {
 
 	update(time, delta) {
 		this.player.setVelocity(0);
-		this.characterMovement.npcMovement(this.NPCs[0], [
-			{ direction: 'right', value: 40 },
-			{ direction: 'up', value: 75 },
-			{ direction: 'left', value: 50 },
-			{ direction: 'down', value: 250 },
+		this.characterMovement.npcMovement(this.NPCs[this.NPCs.lumberjack], [
+			{ direction: 'right', value: 55 },
+			{ direction: 'left', value: 55 },
 		]);
 		if (this.player.canMove) {
 			this.characterMovement.playerControls(this.player);
