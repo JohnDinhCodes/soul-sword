@@ -119,7 +119,8 @@ class HomeTown extends Phaser.Scene {
                 x: playerSpawnPoint.x,
                 y: playerSpawnPoint.y,
                 initialFrame: 1
-            }
+            },
+            speed: 80
         };
 
         // this.invisibleBlock = this.physics.add.sprite(0, 0, "invisibleBlock");
@@ -129,7 +130,6 @@ class HomeTown extends Phaser.Scene {
 
         // Creating player keys to manipulate
         this.player.canMove = true;
-        this.player.speed = 80;
 
         /**********************************
          *              NPCs
@@ -141,7 +141,8 @@ class HomeTown extends Phaser.Scene {
                 x: lumberjackSpawnPoint.x,
                 y: lumberjackSpawnPoint.y,
                 initialFrame: 7
-            }
+            },
+            speed: 30
         };
         const lumberjackIndex = movementPlugin.createCharacter(lumberjackData);
         this.NPCs[lumberjackIndex].dialogue = [
