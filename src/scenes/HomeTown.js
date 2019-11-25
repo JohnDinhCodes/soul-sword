@@ -7,6 +7,8 @@ import lumberjackSpritesheetFile from "../assets/lumberjack.png";
 // Utility Sprites
 import actionBox from "../assets/playerActionBox.png";
 import playerAura from "../assets/playerAura.png";
+import aButtonSprite from "../assets/a-button.png";
+import bButtonSprite from "../assets/b-button.png";
 // Plugins
 import dialogueModalPlugin from "../plugins/DialogueModal";
 import characterMovementPlugin from "../plugins/CharacterMovement";
@@ -57,6 +59,9 @@ class HomeTown extends Phaser.Scene {
             playerAura,
             this.utilitySpriteConfig
         );
+        this.load.image("aButton", aButtonSprite);
+        this.load.image("bButton", bButtonSprite);
+        // Plugins
         this.load.scenePlugin("dialogueModal", dialogueModalPlugin);
         this.load.scenePlugin("characterMovement", characterMovementPlugin);
         this.load.scenePlugin("playerRange", playerRangePlugin);
@@ -177,14 +182,27 @@ class HomeTown extends Phaser.Scene {
         const lumberjack1Index = movementPlugin.createCharacter(
             lumberjackData1
         );
-        this.NPCs[lumberjack1Index].dialogue = [
-            "Hi! I'm a test character! I'll be telling you the latest updates for the game.",
-            "I was updated Monday November 25th, 2019",
-            "In this updated version, the screen dimensions have changed to fit mobile phones!",
-            "Also, I was created in this update! (very exciting)",
-            "Eventually, there will be virtual buttons for mobile devices so you can play soul sword on the go.",
-            "That concludes the latest updates, I hope are excited for the finished game as much as I am!	"
-        ];
+        if (this.isMobile) {
+            this.NPCs[lumberjack1Index].dialogue = [
+                "Hi! I'm a test character! I'll be telling you the latest updates for the game.",
+                "We just got virtual buttons for mobile devices! I see you're using a phone. Please snapchat my creator @johndinh69 if you have any feedback on the controls.",
+                "I was updated Monday November 25th, 2019",
+                "In this updated version, the screen dimensions have changed to fit mobile phones!",
+                "Also, I was created in this update! (very exciting)",
+                "Eventually, there will be virtual buttons for mobile devices so you can play soul sword on the go.",
+                "That concludes the latest updates, I hope are excited for the finished game as much as I am!	"
+            ];
+        } else {
+            this.NPCs[lumberjack1Index].dialogue = [
+                "Hi! I'm a test character! I'll be telling you the latest updates for the game.",
+                "We just got virtual buttons for mobile devices! Give it a try on your phone sometime.",
+                "I was updated Monday November 25th, 2019",
+                "In this updated version, the screen dimensions have changed to fit mobile phones!",
+                "Also, I was created in this update! (very exciting)",
+                "Eventually, there will be virtual buttons for mobile devices so you can play soul sword on the go.",
+                "That concludes the latest updates, I hope are excited for the finished game as much as I am!	"
+            ];
+        }
 
         /**********************************
          *   Map Layers Above Characters
@@ -224,53 +242,97 @@ class HomeTown extends Phaser.Scene {
          *            Dialogue
          ***********************************/
         // might get rid of this later or put it on an obstacle (this is the tutorial)
-        dialoguePlugin.playDialogue(
-            [
-                "Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
-                "You can move around with your keyboard's arrow keys.",
-                "Your 'Z' key is used for closing and canceling actions.",
-                "You can skip dialogue completely by pressing the 'Z' key.",
-                "When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
-                "You can always replay this by talking to the old man in (insert home village here)"
-            ],
-            this.player
-        );
+        if (this.isMobile) {
+            dialoguePlugin.playDialogue(
+                [
+                    "Your A button is used for confirming actions. Try pressing A to continue.",
+                    "You can move around with the joystick on the left hand side of your screen.",
+                    "Your B button is used for closing and canceling actions.",
+                    "You can skip dialogue completely by pressing the B key.",
+                    "When using A to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+                    "You can always replay this by talking to the old man in (insert home village here)"
+                ],
+                this.player
+            );
+        } else {
+            dialoguePlugin.playDialogue(
+                [
+                    "Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
+                    "You can move around with your keyboard's arrow keys.",
+                    "Your 'Z' key is used for closing and canceling actions.",
+                    "You can skip dialogue completely by pressing the 'Z' key.",
+                    "When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+                    "You can always replay this by talking to the old man in (insert home village here)"
+                ],
+                this.player
+            );
+        }
+
         /**********************************
          *            Controls
          ***********************************/
-        // Action Button
-        this.input.keyboard.on("keydown_X", () => {
-            // if dialogue is NOT Playing
-            // HomeTown.dialogueIsPlaying is initiated in DialogueModal.js (the DialogueModal plugin)
-            if (!this.dialogueIsPlaying) {
-                // rangePlugin checkOverlap checks to see if the action box in PlayerRange.js overlaps with an NPC
-                // if there is an overlap with a NPC and the action box, it will set actionData to an object.
-                // the object contains npc: (the npc sprite) and dialogue, an array contained in npc.dialogue initiated under the NPC section in this file
-                let actionData = rangePlugin.checkOverlap(
-                    this.inFrontBlock,
-                    this.NPCs
-                );
-                if (actionData) {
-                    dialoguePlugin.playDialogue(
-                        actionData.dialogue,
-                        this.player,
-                        actionData.npc
-                    );
-                }
-            } else {
-                dialoguePlugin.keydownXHandler();
-            }
-        });
 
         if (this.isMobile) {
             const virtualJoyStick = new virtualJoyStickPlugin(this, {
-                x: 50,
-                y: 150,
+                x: 70,
+                y: 140,
                 radius: 20,
                 dir: 2
             });
             this.cursors = virtualJoyStick.createCursorKeys();
+            const aButton = this.add.image(420, 120, "aButton");
+            const bButton = this.add.image(375, 160, "bButton");
+            aButton.setScale(0.6);
+            aButton.alpha = 0.9;
+            bButton.setScale(0.6);
+            bButton.alpha = 0.9;
+            aButton.setScrollFactor(0);
+            bButton.setScrollFactor(0);
+
+            aButton.setInteractive();
+            bButton.setInteractive();
+            aButton.on("pointerdown", () => {
+                this.actionButton();
+            });
+            bButton.on("pointerdown", () => {
+                this.cancelButton();
+            });
+        } else {
+            // Action Button
+            this.input.keyboard.on("keydown_X", () => {
+                this.actionButton();
+            });
+            this.input.keyboard.on("keydown_Z", () => {
+                this.cancelButton();
+            });
         }
+    }
+
+    actionButton() {
+        // if dialogue is NOT Playing
+        // HomeTown.dialogueIsPlaying is initiated in DialogueModal.js (the DialogueModal plugin)
+        if (!this.dialogueIsPlaying) {
+            // rangePlugin checkOverlap checks to see if the action box in PlayerRange.js overlaps with an NPC
+            // if there is an overlap with a NPC and the action box, it will set actionData to an object.
+            // the object contains npc: (the npc sprite) and dialogue, an array contained in npc.dialogue initiated under the NPC section in this file
+            const actionData =
+                null ||
+                this.playerRange.checkOverlap(this.inFrontBlock, this.NPCs);
+            if (actionData) {
+                this.dialogueModal.playDialogue(
+                    actionData.dialogue,
+                    this.player,
+                    actionData.npc
+                );
+            }
+        } else {
+            this.dialogueModal.keydownXHandler();
+        }
+    }
+
+    cancelButton() {
+        this.dialogueModal.dialogueIndex = this.dialogueModal.dialogueArr.length;
+        this.dialogueModal.closeWindow(this.dialogueModal.currentNPC);
     }
 
     update(time, delta) {

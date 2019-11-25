@@ -43,11 +43,6 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
         this.closeBtn;
 
         this.scene.dialogueIsPlaying = false;
-
-        this.scene.input.keyboard.on("keydown_Z", () => {
-            this.dialogueIndex = this.dialogueArr.length;
-            this.closeWindow(this.currentNPC);
-        });
     }
 
     shutdown() {
