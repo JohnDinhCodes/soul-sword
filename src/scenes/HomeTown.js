@@ -4,7 +4,7 @@ import tilemapJSONFile from '../assets/maps/HomeTown/HomeTown.json';
 // Character Sprites
 import playerSpritesheetFile from '../assets/player.png';
 import lumberjackSpritesheetFile from '../assets/lumberjack.png';
-import invisibleBlockFile from '../assets/invisible.png';
+import actionBox from '../assets/playerActionBox.png';
 // Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
 import characterMovementPlugin from '../plugins/CharacterMovement';
@@ -27,7 +27,7 @@ class HomeTown extends Phaser.Scene {
 			frameHeight: 32,
 			frameWidth: 32,
 		});
-		this.load.spritesheet('inFrontBlock', invisibleBlockFile, {
+		this.load.spritesheet('inFrontBlock', actionBox, {
 			frameHeight: 1,
 			frameWidth: 1,
 		});
@@ -162,12 +162,13 @@ class HomeTown extends Phaser.Scene {
 		 *            Controls
 		 ***********************************/
 		this.input.keyboard.on('keydown_X', () => {
-			console.log(this.dialogueIsPlaying);
 			if (!this.dialogueIsPlaying) {
 				let actionData = rangePlugin.checkOverlap(this.inFrontBlock, this.NPCs);
-				if (actionData && !this.dialogueIsPlaying) {
+				if (actionData) {
 					dialoguePlugin.playDialogue(actionData.dialogue, actionData.npc, this.player);
 				}
+			} else {
+				dialoguePlugin.keydownXHandler();
 			}
 		});
 	}

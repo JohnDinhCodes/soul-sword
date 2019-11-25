@@ -7,7 +7,7 @@ class PlayerRange extends Phaser.Plugins.ScenePlugin {
 		this.blockKey = inFrontBlock;
 		this.player = player;
 		this.scene[inFrontBlock] = this.scene.physics.add.sprite(0, 0, inFrontBlock);
-		this.scene[inFrontBlock].setSize(player.width, player.height);
+		this.scene[inFrontBlock].setSize(player.width - 10, player.height - 10);
 		this.actionData = null;
 	}
 
