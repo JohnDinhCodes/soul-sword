@@ -169,8 +169,12 @@ class HomeTown extends Phaser.Scene {
             lumberjackData1
         );
         this.NPCs[lumberjack1Index].dialogue = [
-            "Hi! I'm a test character.",
-            "Hopefully this game will be fun after it's finished!"
+            "Hi! I'm a test character! I'll be telling you the latest updates for the game.",
+            "I was updated Monday November 25th, 2019",
+            "In this updated version, the screen dimensions have changed to fit mobile phones!",
+            "Also, I was created in this update! (very exciting)",
+            "Eventually, there will be virtual buttons for mobile devices so you can play soul sword on the go.",
+            "That concludes the latest updates, I hope are excited for the finished game as much as I am!	"
         ];
 
         /**********************************
