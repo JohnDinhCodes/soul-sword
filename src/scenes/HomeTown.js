@@ -40,6 +40,11 @@ class HomeTown extends Phaser.Scene {
             this.characterSpriteConfig
         );
         this.load.spritesheet(
+            "lumberjack1",
+            lumberjackSpritesheetFile,
+            this.characterSpriteConfig
+        );
+        this.load.spritesheet(
             "inFrontBlock",
             actionBox,
             this.utilitySpriteConfig
@@ -148,6 +153,24 @@ class HomeTown extends Phaser.Scene {
         this.NPCs[lumberjackIndex].dialogue = [
             "We were cutting down trees to expand our village, and found a big patch of land!",
             "What do you think could be over there?"
+        ];
+
+        const lumberjackData1 = {
+            characterKey: "lumberjack1",
+            animsKeys: animsKeys,
+            spawnData: {
+                x: 500,
+                y: 300,
+                initialFrame: 1
+            },
+            speed: 30
+        };
+        const lumberjack1Index = movementPlugin.createCharacter(
+            lumberjackData1
+        );
+        this.NPCs[lumberjack1Index].dialogue = [
+            "Hi! I'm a test character.",
+            "Hopefully this game will be fun after it's finished!"
         ];
 
         /**********************************

@@ -27,6 +27,7 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
             this.scene.NPCs.push(
                 this.scene.physics.add.sprite(x, y, characterKey, initialFrame)
             );
+            console.log(characterKey, this.scene.NPCs.length - 1);
             this.scene.NPCs[this.scene.NPCs.length - 1].speed = speed;
             this.scene.NPCs[this.scene.NPCs.length - 1].body.immovable = true;
             this.scene.NPCs[this.scene.NPCs.length - 1].body.movable = false;
@@ -156,7 +157,10 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
     createCharacter({ characterKey, spawnData, animsKeys, speed }) {
         this.spawnCharacter(characterKey, speed, spawnData);
         this.createAnims(characterKey, animsKeys);
-        return this.scene.NPCs.length - 1;
+        if (characterKey !== "player") {
+            // when an NPC is created, you can set this method to a variable to get that NPC's index in Scene.NPCs[]
+            return this.scene.NPCs.length - 1;
+        }
     }
 }
 
