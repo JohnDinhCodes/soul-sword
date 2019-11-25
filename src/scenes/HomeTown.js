@@ -4,29 +4,38 @@ import tilemapJSONFile from '../assets/maps/HomeTown/HomeTown.json';
 // Character Sprites
 import playerSpritesheetFile from '../assets/player.png';
 import lumberjackSpritesheetFile from '../assets/lumberjack.png';
+// Utility Sprites
+import actionBox from '../assets/playerActionBox.png';
+import playerAura from '../assets/playerAura.png';
 // Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
 import characterMovementPlugin from '../plugins/CharacterMovement';
+import playerRangePlugin from '../plugins/PlayerRange';
 
 class HomeTown extends Phaser.Scene {
 	constructor() {
 		super({ key: 'HomeTown' });
 		this.NPCs = [];
+		this.characterSpriteConfig = {
+			frameWidth: 32,
+			frameHeight: 32,
+		};
+		this.utilitySpriteConfig = {
+			frameHeight: 1,
+			frameWidth: 1,
+		};
 	}
 
 	preload() {
 		this.load.image('outside', tilesetFile);
 		this.load.tilemapTiledJSON('map', tilemapJSONFile);
-		this.load.spritesheet('player', playerSpritesheetFile, {
-			frameWidth: 32,
-			frameHeight: 32,
-		});
-		this.load.spritesheet('lumberjack', lumberjackSpritesheetFile, {
-			frameHeight: 32,
-			frameWidth: 32,
-		});
+		this.load.spritesheet('player', playerSpritesheetFile, this.characterSpriteConfig);
+		this.load.spritesheet('lumberjack', lumberjackSpritesheetFile, this.characterSpriteConfig);
+		this.load.spritesheet('inFrontBlock', actionBox, this.utilitySpriteConfig);
+		this.load.spritesheet('playerAura', playerAura, this.utilitySpriteConfig);
 		this.load.scenePlugin('dialogueModal', dialogueModalPlugin);
 		this.load.scenePlugin('characterMovement', characterMovementPlugin);
+		this.load.scenePlugin('playerRange', playerRangePlugin);
 	}
 
 	create() {
@@ -45,6 +54,8 @@ class HomeTown extends Phaser.Scene {
 		 ***********************************/
 		const dialoguePlugin = this.dialogueModal;
 		const movementPlugin = this.characterMovement;
+		const rangePlugin = this.playerRange;
+
 		dialoguePlugin.init();
 
 		/**********************************
@@ -71,6 +82,7 @@ class HomeTown extends Phaser.Scene {
 		const playerData = {
 			characterKey: 'player',
 			animsKeys: animsKeys,
+			auraKey: 'playerAura',
 			spawnData: {
 				x: playerSpawnPoint.x,
 				y: playerSpawnPoint.y,
@@ -78,7 +90,11 @@ class HomeTown extends Phaser.Scene {
 			},
 		};
 
+		// this.invisibleBlock = this.physics.add.sprite(0, 0, "invisibleBlock");
+		// this.invisibleBlock.setPosition()
 		movementPlugin.init(playerData);
+		rangePlugin.init('inFrontBlock', 'playerAura', this.player);
+
 		// Creating player keys to manipulate
 		this.player.canMove = true;
 		this.player.speed = 80;
@@ -96,6 +112,10 @@ class HomeTown extends Phaser.Scene {
 			},
 		};
 		const lumberjackIndex = movementPlugin.createCharacter(lumberjackData);
+		this.NPCs[lumberjackIndex].dialogue = [
+			'We were cutting down trees to expand our village, and found a big patch of land!',
+			'What do you think could be over there?',
+		];
 
 		/**********************************
 		 *   Map Layers Above Characters
@@ -129,18 +149,35 @@ class HomeTown extends Phaser.Scene {
 		/**********************************
 		 *            Dialogue
 		 ***********************************/
-		dialoguePlugin.playDialogue([
-			"Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
-			"You can move around with your keyboard's arrow keys.",
-			"Your 'Z' key is used for closing and canceling actions.",
-			"You can skip dialogue completely by pressing the 'Z' key.",
-			"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
-			'You can always replay this by talking to the old man in (insert home village here)',
-		]);
+		dialoguePlugin.playDialogue(
+			[
+				"Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
+				"You can move around with your keyboard's arrow keys.",
+				"Your 'Z' key is used for closing and canceling actions.",
+				"You can skip dialogue completely by pressing the 'Z' key.",
+				"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+				'You can always replay this by talking to the old man in (insert home village here)',
+			],
+			this.player
+		);
+		/**********************************
+		 *            Controls
+		 ***********************************/
+		this.input.keyboard.on('keydown_X', () => {
+			if (!this.dialogueIsPlaying) {
+				let actionData = rangePlugin.checkOverlap(this.inFrontBlock, this.NPCs);
+				if (actionData) {
+					dialoguePlugin.playDialogue(actionData.dialogue, this.player, actionData.npc);
+				}
+			} else {
+				dialoguePlugin.keydownXHandler();
+			}
+		});
 	}
 
 	update(time, delta) {
-		this.player.setVelocity(0);
+		this.playerRange.setBlockInFront(this.player);
+		this.playerRange.setBlockOnPlayer(this.player);
 		this.characterMovement.npcMovement(this.NPCs[this.NPCs.lumberjack], [
 			{ direction: 'right', value: 55 },
 			{ direction: 'left', value: 55 },

@@ -41,6 +41,13 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.dialogue;
 		this.graphics;
 		this.closeBtn;
+
+		this.scene.dialogueIsPlaying = false;
+
+		this.scene.input.keyboard.on('keydown_Z', () => {
+			this.dialogueIndex = this.dialogueArr.length;
+			this.closeWindow(this.currentNPC);
+		});
 	}
 
 	shutdown() {
@@ -97,36 +104,40 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// Creates the close dialogue window button
-	createCloseModalButton() {
-		this.closeBtn = this.scene.make.text({
-			x: this.getGameWidth() - this.padding - 14 - this.getCameraX(),
-			y: this.getGameHeight() - this.windowHeight - this.padding + 3 - this.getCameraY(),
-			text: 'X',
-			style: {
-				font: 'bold 12px Arial',
-				fill: this.closeBtnColor,
-			},
-		});
-		this.closeBtn.setInteractive();
+	// createCloseModalButton() {
+	// 	this.closeBtn = this.scene.make.text({
+	// 		x: this.getGameWidth() - this.padding - 14 - this.getCameraX(),
+	// 		y: this.getGameHeight() - this.windowHeight - this.padding + 3 - this.getCameraY(),
+	// 		text: 'X',
+	// 		style: {
+	// 			font: 'bold 12px Arial',
+	// 			fill: this.closeBtnColor,
+	// 		},
+	// 	});
+	// 	this.closeBtn.setInteractive();
 
-		this.closeBtn.on('pointerover', function() {
-			this.setTint(0xff0000);
-		});
+	// 	this.closeBtn.on('pointerover', function() {
+	// 		this.setTint(0xff0000);
+	// 	});
 
-		this.closeBtn.on('pointerout', function() {
-			this.clearTint();
-		});
-	}
+	// 	this.closeBtn.on('pointerout', function() {
+	// 		this.clearTint();
+	// 	});
+	// }
 
 	// Creates the close dialogue button border
-	createCloseModalButtonBorder() {
-		const x = this.getGameWidth() - this.padding - 20 - this.getCameraX();
-		const y = this.getGameHeight() - this.windowHeight - this.padding - this.getCameraY();
-		this.graphics.strokeRect(x, y, 20, 20);
-	}
+	// createCloseModalButtonBorder() {
+	// 	const x = this.getGameWidth() - this.padding - 20 - this.getCameraX();
+	// 	const y = this.getGameHeight() - this.windowHeight - this.padding - this.getCameraY();
+	// 	this.graphics.strokeRect(x, y, 20, 20);
+	// }
 
 	// Hide/Show the dialogue window
-	closeWindow() {
+	closeWindow(obj) {
+		if (this.scene.dialogueIsPlaying) {
+			this.scene.dialogueIsPlaying = false;
+		}
+
 		this.visible = false;
 		if (this.text) this.text.visible = false;
 		if (this.graphics) this.graphics.visible = false;
@@ -137,6 +148,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		// Sets player's canMove value to true.
 		// (Make sure you set your player's spritesheet key to "player")
 		this.scene.player.canMove = true;
+		if (obj) obj.canMove = true;
 	}
 
 	// Sets the text for the dialogue window
@@ -189,6 +201,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
 	// Creates the dialogue window
 	createWindow() {
+		this.scene.dialogueIsPlaying = true;
 		const gameHeight = this.getGameHeight();
 		const gameWidth = this.getGameWidth();
 		const dimensions = this.calculateWindowDimensions(gameWidth, gameHeight);
@@ -197,40 +210,31 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.createOuterWindow(dimensions);
 		this.createInnerWindow(dimensions);
 
-		this.createCloseModalButton();
-		this.createCloseModalButtonBorder();
+		// this.createCloseModalButton();
+		// this.createCloseModalButtonBorder();
 	}
 
-	playDialogue([...text]) {
+	playDialogue([...text], player, obj) {
 		// Set player's canMove value to false
-		this.scene.player.canMove = false;
-		let dialogueIndex = 1;
+		player.canMove = false;
+		if (obj) obj.canMove = false;
+		this.currentNPC = obj;
+
+		this.dialogueIndex = 1;
 		this.createWindow();
 		// Automatically play first line in dialogue array
 		this.setText(text[0]);
 
-		// Closes window when Z key is pressed
-		// (Map this to anything you want)
-		this.scene.input.keyboard.on('keydown_Z', () => {
-			this.scene.input.keyboard.removeAllListeners();
-			this.closeWindow();
-		});
+		this.dialogueArr = text;
+	}
 
-		this.closeBtn.on('pointerdown', () => {
-			this.scene.input.keyboard.removeAllListeners();
-			this.closeWindow();
-		});
-
-		this.scene.input.keyboard.on('keydown_X', () => {
-			if (dialogueIndex === text.length) {
-				this.scene.input.keyboard.removeAllListeners();
-				this.canMove = true;
-				this.closeWindow();
-			} else {
-				this.setText(text[dialogueIndex]);
-				dialogueIndex++;
-			}
-		});
+	keydownXHandler() {
+		if (this.dialogueIndex === this.dialogueArr.length) {
+			this.closeWindow(this.currentNPC);
+		} else {
+			this.setText(this.dialogueArr[this.dialogueIndex]);
+			this.dialogueIndex++;
+		}
 	}
 }
 
