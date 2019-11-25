@@ -4,11 +4,12 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
     }
 
     // Spawn and setup main player in scene
-    init(playerData) {
+    init(playerData, isMobile) {
         // Creates cursors for your scene
-        this.scene.cursors = this.scene.input.keyboard.createCursorKeys();
+        if (!isMobile) {
+            this.scene.cursors = this.scene.input.keyboard.createCursorKeys();
+        }
         this.auraKey = playerData.auraKey;
-
         this.createCharacter(playerData);
     }
 

@@ -11,6 +11,7 @@ import playerAura from "../assets/playerAura.png";
 import dialogueModalPlugin from "../plugins/DialogueModal";
 import characterMovementPlugin from "../plugins/CharacterMovement";
 import playerRangePlugin from "../plugins/PlayerRange";
+import virtualJoyStickPlugin from "../plugins/rex-plugins/virtualjoystick";
 
 class HomeTown extends Phaser.Scene {
     constructor() {
@@ -24,6 +25,8 @@ class HomeTown extends Phaser.Scene {
             frameHeight: 1,
             frameWidth: 1
         };
+
+        this.isMobile = false;
     }
 
     preload() {
@@ -57,6 +60,12 @@ class HomeTown extends Phaser.Scene {
         this.load.scenePlugin("dialogueModal", dialogueModalPlugin);
         this.load.scenePlugin("characterMovement", characterMovementPlugin);
         this.load.scenePlugin("playerRange", playerRangePlugin);
+
+        if (this.sys.game.device.os.desktop) {
+            console.log("desktop");
+        } else {
+            this.isMobile = true;
+        }
     }
 
     create() {
@@ -74,8 +83,8 @@ class HomeTown extends Phaser.Scene {
          *             Plugin
          ***********************************/
         const dialoguePlugin = this.dialogueModal;
-        const movementPlugin = this.characterMovement;
         const rangePlugin = this.playerRange;
+        const movementPlugin = this.characterMovement;
 
         dialoguePlugin.init();
 
@@ -130,7 +139,7 @@ class HomeTown extends Phaser.Scene {
 
         // this.invisibleBlock = this.physics.add.sprite(0, 0, "invisibleBlock");
         // this.invisibleBlock.setPosition()
-        movementPlugin.init(playerData);
+        movementPlugin.init(playerData, this.isMobile);
         rangePlugin.init("inFrontBlock", "playerAura", this.player);
 
         // Creating player keys to manipulate
@@ -252,6 +261,16 @@ class HomeTown extends Phaser.Scene {
                 dialoguePlugin.keydownXHandler();
             }
         });
+
+        if (this.isMobile) {
+            const virtualJoyStick = new virtualJoyStickPlugin(this, {
+                x: 50,
+                y: 150,
+                radius: 20,
+                dir: 2
+            });
+            this.cursors = virtualJoyStick.createCursorKeys();
+        }
     }
 
     update(time, delta) {
