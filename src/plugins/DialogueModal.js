@@ -41,6 +41,8 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.dialogue;
 		this.graphics;
 		this.closeBtn;
+
+		this.scene.dialogueIsPlaying = false;
 	}
 
 	shutdown() {
@@ -127,6 +129,8 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
 	// Hide/Show the dialogue window
 	closeWindow(obj) {
+		this.scene.dialogueIsPlaying = false;
+
 		this.visible = false;
 		if (this.text) this.text.visible = false;
 		if (this.graphics) this.graphics.visible = false;
@@ -190,6 +194,8 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
 	// Creates the dialogue window
 	createWindow() {
+		this.scene.dialogueIsPlaying = true;
+
 		const gameHeight = this.getGameHeight();
 		const gameWidth = this.getGameWidth();
 		const dimensions = this.calculateWindowDimensions(gameWidth, gameHeight);
@@ -202,9 +208,9 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.createCloseModalButtonBorder();
 	}
 
-	playDialogue([...text], obj) {
+	playDialogue([...text], obj, player) {
 		// Set player's canMove value to false
-		this.scene.player.canMove = false;
+		player.canMove = false;
 		if (obj) obj.canMove = false;
 		let dialogueIndex = 1;
 		this.createWindow();
@@ -215,17 +221,17 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		// (Map this to anything you want)
 		this.scene.input.keyboard.on('keydown_Z', () => {
 			dialogueIndex = text.length;
-			this.closeWindow();
+			this.closeWindow(obj);
 		});
 
 		this.closeBtn.on('pointerdown', () => {
 			dialogueIndex = text.length;
-			this.closeWindow();
+			this.closeWindow(obj);
 		});
 
 		this.scene.input.keyboard.on('keydown_X', () => {
 			if (dialogueIndex === text.length) {
-				this.closeWindow();
+				this.closeWindow(obj);
 			} else {
 				this.setText(text[dialogueIndex]);
 				dialogueIndex++;

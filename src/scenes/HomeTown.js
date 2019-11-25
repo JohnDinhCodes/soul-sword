@@ -8,7 +8,7 @@ import invisibleBlockFile from '../assets/invisible.png';
 // Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
 import characterMovementPlugin from '../plugins/CharacterMovement';
-import rangeDetectionPlugin from '../plugins/RangeDetection';
+import playerRangePlugin from '../plugins/PlayerRange';
 
 class HomeTown extends Phaser.Scene {
 	constructor() {
@@ -27,13 +27,13 @@ class HomeTown extends Phaser.Scene {
 			frameHeight: 32,
 			frameWidth: 32,
 		});
-		this.load.spritesheet('invisibleBlock', invisibleBlockFile, {
+		this.load.spritesheet('inFrontBlock', invisibleBlockFile, {
 			frameHeight: 1,
 			frameWidth: 1,
 		});
 		this.load.scenePlugin('dialogueModal', dialogueModalPlugin);
 		this.load.scenePlugin('characterMovement', characterMovementPlugin);
-		this.load.scenePlugin('rangeDetection', rangeDetectionPlugin);
+		this.load.scenePlugin('playerRange', playerRangePlugin);
 	}
 
 	create() {
@@ -52,7 +52,7 @@ class HomeTown extends Phaser.Scene {
 		 ***********************************/
 		const dialoguePlugin = this.dialogueModal;
 		const movementPlugin = this.characterMovement;
-		const rangePlugin = this.rangeDetection;
+		const rangePlugin = this.playerRange;
 
 		dialoguePlugin.init();
 
@@ -90,7 +90,7 @@ class HomeTown extends Phaser.Scene {
 		// this.invisibleBlock = this.physics.add.sprite(0, 0, "invisibleBlock");
 		// this.invisibleBlock.setPosition()
 		movementPlugin.init(playerData);
-		rangePlugin.init('invisibleBlock', this.player);
+		rangePlugin.init('inFrontBlock', this.player);
 
 		// Creating player keys to manipulate
 		this.player.canMove = true;
@@ -109,6 +109,10 @@ class HomeTown extends Phaser.Scene {
 			},
 		};
 		const lumberjackIndex = movementPlugin.createCharacter(lumberjackData);
+		this.NPCs[lumberjackIndex].dialogue = [
+			'We were cutting down trees to expand our village, and found a big patch of land!',
+			'What do you think could be over there?',
+		];
 
 		/**********************************
 		 *   Map Layers Above Characters
@@ -142,19 +146,34 @@ class HomeTown extends Phaser.Scene {
 		/**********************************
 		 *            Dialogue
 		 ***********************************/
-		dialoguePlugin.playDialogue([
-			"Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
-			"You can move around with your keyboard's arrow keys.",
-			"Your 'Z' key is used for closing and canceling actions.",
-			"You can skip dialogue completely by pressing the 'Z' key.",
-			"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
-			'You can always replay this by talking to the old man in (insert home village here)',
-		]);
+		dialoguePlugin.playDialogue(
+			[
+				"Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
+				"You can move around with your keyboard's arrow keys.",
+				"Your 'Z' key is used for closing and canceling actions.",
+				"You can skip dialogue completely by pressing the 'Z' key.",
+				"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
+				'You can always replay this by talking to the old man in (insert home village here)',
+			],
+			null,
+			this.player
+		);
+		/**********************************
+		 *            Controls
+		 ***********************************/
+		this.input.keyboard.on('keydown_X', () => {
+			console.log(this.dialogueIsPlaying);
+			if (!this.dialogueIsPlaying) {
+				let actionData = rangePlugin.checkOverlap(this.inFrontBlock, this.NPCs);
+				if (actionData && !this.dialogueIsPlaying) {
+					dialoguePlugin.playDialogue(actionData.dialogue, actionData.npc, this.player);
+				}
+			}
+		});
 	}
 
 	update(time, delta) {
-		console.log(this.player.angle);
-		this.rangeDetection.setBlockPosition(this.player);
+		this.playerRange.setBlockInFront(this.player);
 		this.characterMovement.npcMovement(this.NPCs[this.NPCs.lumberjack], [
 			{ direction: 'right', value: 55 },
 			{ direction: 'left', value: 55 },
