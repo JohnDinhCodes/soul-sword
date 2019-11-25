@@ -214,7 +214,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		// this.createCloseModalButtonBorder();
 	}
 
-	playDialogue([...text], obj, player) {
+	playDialogue([...text], player, obj) {
 		// Set player's canMove value to false
 		player.canMove = false;
 		if (obj) obj.canMove = false;

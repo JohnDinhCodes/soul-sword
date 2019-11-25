@@ -3,11 +3,17 @@ class PlayerRange extends Phaser.Plugins.ScenePlugin {
 		super(scene, pluginManager);
 	}
 
-	init(inFrontBlock, player) {
+	init(inFrontBlock, playerAura, player) {
 		this.blockKey = inFrontBlock;
+		this.auraKey = playerAura;
 		this.player = player;
+
 		this.scene[inFrontBlock] = this.scene.physics.add.sprite(0, 0, inFrontBlock);
 		this.scene[inFrontBlock].setSize(player.width - 10, player.height - 10);
+
+		this.scene[playerAura] = this.scene.physics.add.sprite(0, 0, playerAura);
+		this.scene[playerAura].setSize(player.width + 2, player.height + 2);
+
 		this.actionData = null;
 	}
 
@@ -24,6 +30,11 @@ class PlayerRange extends Phaser.Plugins.ScenePlugin {
 			};
 		});
 		return this.actionData;
+	}
+
+	setBlockOnPlayer() {
+		this.scene[this.auraKey].x = this.player.x;
+		this.scene[this.auraKey].y = this.player.y;
 	}
 
 	setBlockInFront() {

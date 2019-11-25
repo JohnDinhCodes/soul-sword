@@ -7,6 +7,7 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 	init(playerData) {
 		// Creates cursors for your scene
 		this.scene.cursors = this.scene.input.keyboard.createCursorKeys();
+		this.auraKey = playerData.auraKey;
 
 		this.createCharacter(playerData);
 	}
@@ -18,6 +19,7 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 		} else {
 			// Adds NPC to scene's NPC array and makes them immovable
 			this.scene.NPCs.push(this.scene.physics.add.sprite(x, y, characterKey, initialFrame));
+			this.scene.NPCs[this.scene.NPCs.length - 1].body.immovable = true;
 			this.scene.NPCs[this.scene.NPCs.length - 1].body.movable = false;
 			this.scene.NPCs[this.scene.NPCs.length - 1].canMove = true;
 			this.scene.NPCs[this.scene.NPCs.length - 1].speed = 40;
@@ -48,15 +50,21 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 	npcMovement(npc, data) {
 		npc.setVelocity(0);
 		const npcKey = npc.texture.key;
-		// Stops NPC movement if touching anything
-		npc.body.moves = npc.body.touching.none;
+		// Allows character to move by default
+		npc.body.moves = true;
+		this.scene.physics.overlap(this.scene[this.auraKey], npc, () => {
+			// If NPC is overlapping player's invisible aura sprite, npc stops moving
+			npc.body.moves = false;
+		});
 
+		// If first time running, this will initialize the startX and startY with the NPC's spawn x & y
 		if (!npc.moveIndex && !npc.startX) {
 			npc.moveIndex = 0;
 			npc.startX = npc.x;
 			npc.startY = npc.y;
 		}
 
+		// Sets NPC's direction and distance (amount of values in the x/y plane to move) by current moveIndex
 		const direction = data[npc.moveIndex].direction;
 		const distance = data[npc.moveIndex].value;
 
