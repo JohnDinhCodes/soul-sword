@@ -188,6 +188,7 @@ class HomeTown extends Phaser.Scene {
                 "The latest update was on Monday, November 25th, 2019",
                 "In this updated version, the screen dimensions have changed to fit mobile phones.",
                 "Also, I was created in this update! (very exciting)",
+                "You can also run now by holding down B",
                 "Currently, this map will be getting some new houses and more NPC's in the next update.",
                 "That concludes the latest updates, I hope are excited for the finished game as much as I am!	"
             ];
@@ -198,6 +199,7 @@ class HomeTown extends Phaser.Scene {
                 "The latest update was on Monday, November 25th, 2019",
                 "In this updated version, the screen dimensions have changed to fit mobile phones.",
                 "Also, I was created in this update! (very exciting)",
+                "You can also run now by holding down the 'Z' key",
                 "Currently, this map will be getting some new houses and more NPC's in the next update.",
                 "That concludes the latest updates, I hope are excited for the finished game as much as I am!	"
             ];
@@ -249,7 +251,7 @@ class HomeTown extends Phaser.Scene {
                     "Your B button is used for closing and canceling actions.",
                     "You can skip dialogue completely by pressing the B key.",
                     "When using A to continue dialogue, the window will automatically close if there is no more dialogue to display.",
-                    "You can always replay this by talking to the old man in (insert home village here)"
+                    "In this latest update, you can now run by holding down B"
                 ],
                 this.player
             );
@@ -261,7 +263,7 @@ class HomeTown extends Phaser.Scene {
                     "Your 'Z' key is used for closing and canceling actions.",
                     "You can skip dialogue completely by pressing the 'Z' key.",
                     "When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
-                    "You can always replay this by talking to the old man in (insert home village here)"
+                    "In this latest update, you can now run by holding down 'Z'"
                 ],
                 this.player
             );
