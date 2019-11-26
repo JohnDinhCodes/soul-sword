@@ -167,7 +167,7 @@ class HomeTown extends Phaser.Scene {
 				'You can also run now by holding down B',
 				'We recently got some new houses today!',
 				"New NPC's will be added in the next update.",
-				'That concludes the latest updates, I hope are excited for the finished game as much as I am!',
+				'That concludes the latest updates, I hope you are excited for the finished game as much as I am!',
 			];
 		} else {
 			this.NPCs[emiIndex].dialogue = [
@@ -179,7 +179,7 @@ class HomeTown extends Phaser.Scene {
 				"You can also run now by holding down the 'Z' key now",
 				'We recently got some new houses today!',
 				"New NPC's will be added in the next update.",
-				'That concludes the latest updates, I hope are excited for the finished game as much as I am!',
+				'That concludes the latest updates, I hope you are excited for the finished game as much as I am!',
 			];
 		}
 
@@ -290,11 +290,14 @@ class HomeTown extends Phaser.Scene {
 			});
 			this.input.keyboard.on('keydown_Z', () => {
 				this.cancelButton();
+				this.player.isRunning = true;
+
 				this.player.speed = playerData.speed * 2;
 			});
 
 			this.input.keyboard.on('keyup_Z', () => {
 				this.player.speed = playerData.speed;
+				this.player.isRunning = false;
 			});
 		}
 	}
