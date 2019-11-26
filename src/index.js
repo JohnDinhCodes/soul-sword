@@ -4,7 +4,14 @@ import HomeTown from "./scenes/HomeTown";
 const config = {
     width: 480,
     height: 270,
-    zoom: 2,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        width: 480,
+        height: 270,
+        zoom: 0.5,
+        parent: "game",
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     type: Phaser.AUTO,
     parent: "game",
     scene: [Loading, HomeTown],
