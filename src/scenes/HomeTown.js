@@ -273,6 +273,7 @@ class HomeTown extends Phaser.Scene {
          *            Controls
          ***********************************/
 
+        this.input.addPointer(2);
         if (this.isMobile) {
             const virtualJoyStick = new virtualJoyStickPlugin(this, {
                 x: 70,
