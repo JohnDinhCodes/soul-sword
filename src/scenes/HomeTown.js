@@ -217,7 +217,9 @@ class HomeTown extends Phaser.Scene {
 
         this.NPCs[marthaIndex].dialogue = [
             "I'm Martha. Most of the character sprites are from different artists.",
-            "My pixels were put together by 'kitterlings'."
+            "My pixels were put together by 'kitterlings'.",
+            "You can find my artist on Instagram @ 'kitterlings'",
+            "You can also find my arist on 'kitterlings.itch.io'"
         ];
 
         if (this.isMobile) {
