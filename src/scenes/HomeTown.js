@@ -295,6 +295,11 @@ class HomeTown extends Phaser.Scene {
             });
             bButton.on("pointerdown", () => {
                 this.cancelButton();
+                this.player.speed = playerData.speed * 2;
+            });
+            bButton.on("pointerup", () => {
+                this.cancelButton();
+                this.player.speed = playerData.speed;
             });
         } else {
             // Action Button
@@ -303,6 +308,11 @@ class HomeTown extends Phaser.Scene {
             });
             this.input.keyboard.on("keydown_Z", () => {
                 this.cancelButton();
+                this.player.speed = playerData.speed * 2;
+            });
+
+            this.input.keyboard.on("keyup_Z", () => {
+                this.player.speed = playerData.speed;
             });
         }
     }
