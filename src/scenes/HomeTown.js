@@ -48,7 +48,7 @@ class HomeTown extends Phaser.Scene {
 		this.load.scenePlugin('playerRange', playerRangePlugin);
 
 		if (this.sys.game.device.os.desktop) {
-			console.log('desktop');
+			this.isMobile = false;
 		} else {
 			this.isMobile = true;
 		}
