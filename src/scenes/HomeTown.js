@@ -259,6 +259,7 @@ class HomeTown extends Phaser.Scene {
         /**********************************
          *             Cameras
          ***********************************/
+
         this.cameras.main.setBounds(
             0,
             0,
@@ -371,6 +372,7 @@ class HomeTown extends Phaser.Scene {
                 this.player.isRunning = false;
             });
         }
+        dialoguePlugin.createChoiceWindow();
     }
 
     actionButton() {
