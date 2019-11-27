@@ -175,34 +175,25 @@ class HomeTown extends Phaser.Scene {
 		this.NPCs[marthaIndex].dialogue = [
 			"I'm Martha. Most of the character sprites are from different artists.",
 			"My pixels were put together by 'kitterlings'.",
-			"You can find my artist on Instagram @ 'kitterlings'",
-			"You can also find my arist on 'kitterlings.itch.io'",
+			"You can find my artist on Instagram @ 'kitterlings' as well on 'kitterlings.itch.io'",
 		];
 
-		if (this.isMobile) {
-			this.NPCs[emiIndex].dialogue = [
-				"Oh! Hi there! I'm Emi.",
-				"We just got virtual buttons for mobile devices! I see you're using a phone. If you have any problems with this game on your device, let my creator know.",
-				'The latest update was on Tuesday, November 26th, 2019',
-				'In this updated version, the screen dimensions have changed to fit mobile phones.',
-				'Also, I was created in this update! (very exciting)',
-				'You can also run now by holding down B',
-				'We recently got some new houses today!',
-				"New NPC's will be added in the next update.",
-				'That concludes the latest updates, I hope you are excited for the finished game as much as I am!',
-			];
-		} else {
-			this.NPCs[emiIndex].dialogue = [
-				"Oh! Hi there! I'm Emi.",
-				"We just got virtual buttons for mobile devices! I see you're playing with a keyboard, give the mobile website a try sometime.",
-				'The latest update was on Tuesday, November 26th, 2019',
-				'In this updated version, the screen dimensions have changed to fit mobile phones.',
-				'Also, I was created in this update! (very exciting)',
-				"You can also run now by holding down the 'Z' key now",
-				'We recently got some new houses today!',
-				"New NPC's will be added in the next update.",
-				'That concludes the latest updates, I hope you are excited for the finished game as much as I am!',
-			];
+		this.NPCs[emiIndex].dialogue = [
+			"Oh! Hi there! I'm Emi.",
+			"We just got virtual buttons for mobile devices! I see you're already using them. If you have any problems with this game on your device, let my creator know.",
+			'The latest update was on Tuesday, November 26th, 2019 at 9:00 PM',
+			'In this updated version, initial set up has been created for making different choices in dialogue.',
+			'Hopefully that gets completed soon so you and I can have dynamic conversations.',
+			'Because of recent developments, the ability to skip dialogue with your B button has been removed.',
+			'In the upcomming updates, you will be able to enter the buildings in this map.',
+			'That concludes the latest updates, I hope you are excited for the finished game as much as I am!',
+		];
+
+		if (!this.isMobile) {
+			this.NPCs[emiIndex].dialogue[1] =
+				'We just got virtual buttons for mobile devices! Visit this site on your phone to try them out. If you have any problems with this game on your device, let my creator know.';
+			this.NPCs[emiIndex].dialogue[5] =
+				'Because of recent developments, the ability to skip dialogue with your Z key has been removed.';
 		}
 
 		/**********************************
@@ -250,8 +241,6 @@ class HomeTown extends Phaser.Scene {
 					'Your A button is used for confirming actions. Try pressing A to continue.',
 					'You can move around with the joystick on the left hand side of your screen.',
 					'Your B button is used for closing and canceling actions.',
-					'You can skip dialogue completely by pressing the B key.',
-					'When using A to continue dialogue, the window will automatically close if there is no more dialogue to display.',
 					'In this latest update, you can now run by holding down B',
 				],
 				this.player
@@ -262,8 +251,6 @@ class HomeTown extends Phaser.Scene {
 					"Your 'X' key is used for confirming actions. Try pressing 'X' to continue.",
 					"You can move around with your keyboard's arrow keys.",
 					"Your 'Z' key is used for closing and canceling actions.",
-					"You can skip dialogue completely by pressing the 'Z' key.",
-					"When using 'X' to continue dialogue, the window will automatically close if there is no more dialogue to display.",
 					"In this latest update, you can now run by holding down 'Z'",
 				],
 				this.player
