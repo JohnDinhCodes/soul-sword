@@ -43,6 +43,8 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.closeBtn;
 
 		this.scene.dialogueIsPlaying = false;
+
+		// Setup dimensions for yes/no options
 	}
 
 	shutdown() {
@@ -73,11 +75,17 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// Calculates where to place the dialogue window
-	calculateWindowDimensions(width, height) {
-		const x = this.padding - this.getCameraX();
-		const y = height - this.windowHeight - this.padding - this.getCameraY();
-		const rectWidth = width - this.padding * 2;
-		const rectHeight = this.windowHeight;
+	calculateWindowDimensions(width, height, isYesNoDialogue) {
+		let x = this.padding - this.getCameraX();
+		let y = height - this.windowHeight - this.padding - this.getCameraY();
+		let rectWidth = width - this.padding * 2;
+		let rectHeight = this.windowHeight;
+		if (isYesNoDialogue) {
+			x += 375;
+			y -= 80;
+			rectHeight /= 2.5;
+			rectWidth -= 400;
+		}
 		return {
 			x,
 			y,
@@ -195,22 +203,20 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	}
 
 	createChoiceWindow() {
-		const gameHeight1 = this.getGameHeight() - 80;
-		const gameHeight2 = this.getGameHeight() - 45;
-		const gameWidth = this.getGameWidth() - 400;
+		this.scene.yesNoChoice = 'yes';
+		this.yesDimension = this.calculateWindowDimensions(this.getGameWidth(), this.getGameHeight(), true);
+		this.noDimension = this.calculateWindowDimensions(this.getGameWidth(), this.getGameHeight() + 35, true);
 
-		const dimensions1 = this.calculateWindowDimensions(gameWidth, gameHeight1);
-		const dimensions2 = this.calculateWindowDimensions(gameWidth, gameHeight2);
+		this.createOuterWindow(this.yesDimension);
+		this.createInnerWindow(this.yesDimension);
+		this.createInnerWindow(this.noDimension);
+	}
 
-		dimensions1.x += 375;
-		dimensions2.x += 375;
-
-		dimensions1.rectHeight /= 2.5;
-		dimensions2.rectHeight /= 2.5;
-
-		this.createOuterWindow(dimensions1);
-		this.createInnerWindow(dimensions1);
-		this.createInnerWindow(dimensions2);
+	toggleChoice() {
+		if (this.scene.yesNoChoice === 'yes') {
+			this.scene.yesNoChoice = 'no';
+			this.createOuterWindow;
+		}
 	}
 
 	// Creates the dialogue window

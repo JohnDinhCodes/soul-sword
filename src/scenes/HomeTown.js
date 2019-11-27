@@ -274,7 +274,10 @@ class HomeTown extends Phaser.Scene {
 		 *            Controls
 		 ***********************************/
 
+		if (this.cursors.up.isDown) {
+		}
 		this.input.addPointer(2);
+
 		if (this.isMobile) {
 			const virtualJoyStick = new virtualJoyStickPlugin(this, {
 				x: 70,
@@ -294,6 +297,7 @@ class HomeTown extends Phaser.Scene {
 
 			aButton.setInteractive();
 			bButton.setInteractive();
+
 			aButton.on('pointerdown', () => {
 				this.actionButton();
 			});
