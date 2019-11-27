@@ -295,16 +295,6 @@ class HomeTown extends Phaser.Scene {
 				this.player.speed = playerData.speed;
 			});
 		} else {
-			this.cursors.down.on('down', () => {
-				if (this.choiceIsOn) {
-					dialoguePlugin.toggleChoice();
-				}
-			});
-			this.cursors.up.on('down', () => {
-				if (this.choiceIsOn) {
-					dialoguePlugin.toggleChoice();
-				}
-			});
 			// Action Button
 			this.input.keyboard.on('keydown_X', () => {
 				this.actionButton();
@@ -321,6 +311,16 @@ class HomeTown extends Phaser.Scene {
 				this.player.isRunning = false;
 			});
 		}
+		this.cursors.down.on('down', () => {
+			if (this.choiceIsOn) {
+				dialoguePlugin.toggleChoice();
+			}
+		});
+		this.cursors.up.on('down', () => {
+			if (this.choiceIsOn) {
+				dialoguePlugin.toggleChoice();
+			}
+		});
 	}
 
 	actionButton() {
