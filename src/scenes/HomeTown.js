@@ -168,11 +168,12 @@ class HomeTown extends Phaser.Scene {
 				y: 300,
 				initialFrame: 1,
 			},
-			speed: 30,
+			speed: 150,
 		};
 		const marthaIndex = movementPlugin.createCharacter(marthaData);
 
 		this.NPCs[marthaIndex].dialogue = [
+			"I'M FAST AS FUCK BOIIIIIIIIIIIIIIII",
 			"I'm Martha. Most of the character sprites are from different artists.",
 			"My pixels were put together by 'kitterlings'.",
 			"You can find my artist on Instagram @ 'kitterlings' as well on 'kitterlings.itch.io'",

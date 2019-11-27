@@ -25,7 +25,7 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 			this.scene.NPCs[this.scene.NPCs.length - 1].body.immovable = true;
 			this.scene.NPCs[this.scene.NPCs.length - 1].body.movable = false;
 			this.scene.NPCs[this.scene.NPCs.length - 1].canMove = true;
-			this.scene.NPCs[this.scene.NPCs.length - 1].speed = 40;
+			this.scene.NPCs[this.scene.NPCs.length - 1].speed = speed;
 			this.scene.NPCs[characterKey] = this.scene.NPCs.length - 1;
 		}
 	}
@@ -75,25 +75,25 @@ class CharacterMovement extends Phaser.Plugins.ScenePlugin {
 			if (direction === 'right') {
 				this.scene.physics.moveTo(npc, npc.startX + distance, npc.startY, npc.speed);
 				npc.anims.play(npcKey + 'Right', true);
-				if (Math.floor(npc.x) === Math.floor(npc.startX + distance)) {
+				if (Math.floor(npc.x) >= Math.floor(npc.startX + distance)) {
 					this.setTurnCoords(npc, data.length);
 				}
 			} else if (direction === 'up') {
 				this.scene.physics.moveTo(npc, npc.startX, npc.startY - distance, npc.speed);
 				npc.anims.play(npcKey + 'Up', true);
-				if (Math.floor(npc.y) === Math.floor(npc.startY - distance)) {
+				if (Math.floor(npc.y) <= Math.floor(npc.startY - distance)) {
 					this.setTurnCoords(npc, data.length);
 				}
 			} else if (direction === 'left') {
 				this.scene.physics.moveTo(npc, npc.startX - distance, npc.startY, npc.speed);
 				npc.anims.play(npcKey + 'Left', true);
-				if (Math.floor(npc.x) === Math.floor(npc.startX - distance)) {
+				if (Math.floor(npc.x) <= Math.floor(npc.startX - distance)) {
 					this.setTurnCoords(npc, data.length);
 				}
 			} else if (direction === 'down') {
 				this.scene.physics.moveTo(npc, npc.startX, npc.startY + distance, npc.speed);
 				npc.anims.play(npcKey + 'Down', true);
-				if (Math.floor(npc.y) === Math.floor(npc.startY + distance)) {
+				if (Math.floor(npc.y) >= Math.floor(npc.startY + distance)) {
 					this.setTurnCoords(npc, data.length);
 				}
 			}
