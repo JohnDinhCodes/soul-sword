@@ -174,7 +174,7 @@ class VirtualJoyStick {
 		}
 
 		if (gameObject === undefined) {
-			gameObject = this.scene.add.circle(0, 0, 40).setStrokeStyle(3, 0x202020);
+			gameObject = this.scene.add.circle(0, 0, 20).setStrokeStyle(3, 0x202020);
 		}
 		this.thumb = gameObject;
 		return this;

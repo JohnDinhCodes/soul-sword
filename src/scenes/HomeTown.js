@@ -267,7 +267,7 @@ class HomeTown extends Phaser.Scene {
 			const virtualJoyStick = new virtualJoyStickPlugin(this, {
 				x: 70,
 				y: 140,
-				radius: 20,
+				radius: 40,
 				dir: 2,
 			});
 			this.cursors = virtualJoyStick.createCursorKeys();
