@@ -39,7 +39,8 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.text;
 		// the text that will be displayed in the window
 		this.dialogue;
-		this.graphics;
+		this.dialogueGraphics;
+		this.yesNoGraphics;
 		this.closeBtn;
 
 		this.scene.dialogueIsPlaying = false;
@@ -95,15 +96,25 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// Creates the inner dialogue window (where the text is displayed)
-	createInnerWindow({ x, y, rectWidth, rectHeight }) {
-		this.graphics.fillStyle(this.windowColor, this.windowAlpha);
-		this.graphics.fillRect(x + 1, y + 1, rectWidth - 1, rectHeight - 1);
+	createInnerWindow({ x, y, rectWidth, rectHeight }, isYesNoDialogue = false) {
+		if (isYesNoDialogue) {
+			this.yesNoGraphics.fillStyle(this.windowColor, this.windowAlpha);
+			this.yesNoGraphics.fillRect(x + 1, y + 1, rectWidth - 1, rectHeight - 1);
+		} else {
+			this.dialogueGraphics.fillStyle(this.windowColor, this.windowAlpha);
+			this.dialogueGraphics.fillRect(x + 1, y + 1, rectWidth - 1, rectHeight - 1);
+		}
 	}
 
 	// Creates the border rectangle of the dialogue window
-	createOuterWindow({ x, y, rectWidth, rectHeight }) {
-		this.graphics.lineStyle(this.borderThickness, this.borderColor, this.borderAlpha);
-		this.graphics.strokeRect(x, y, rectWidth, rectHeight);
+	createOuterWindow({ x, y, rectWidth, rectHeight }, isYesNoDialogue = false) {
+		if (isYesNoDialogue) {
+			this.yesNoGraphics.lineStyle(this.borderThickness, this.borderColor, this.borderAlpha);
+			this.yesNoGraphics.strokeRect(x, y, rectWidth, rectHeight);
+		} else {
+			this.dialogueGraphics.lineStyle(this.borderThickness, this.borderColor, this.borderAlpha);
+			this.dialogueGraphics.strokeRect(x, y, rectWidth, rectHeight);
+		}
 	}
 
 	// Creates the close dialogue window button
@@ -132,7 +143,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	// createCloseModalButtonBorder() {
 	// 	const x = this.getGameWidth() - this.padding - 20 - this.getCameraX();
 	// 	const y = this.getGameHeight() - this.windowHeight - this.padding - this.getCameraY();
-	// 	this.graphics.strokeRect(x, y, 20, 20);
+	// 	this.dialogueGraphics.strokeRect(x, y, 20, 20);
 	// }
 
 	// Hide/Show the dialogue window
@@ -143,7 +154,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
 		this.visible = false;
 		if (this.text) this.text.visible = false;
-		if (this.graphics) this.graphics.visible = false;
+		if (this.dialogueGraphics) this.dialogueGraphics.visible = false;
 		if (this.closeBtn) this.closeBtn.visible = false;
 		if (this.timedEvent) this.timedEvent.remove();
 		if (this.text) this.text.destroy();
@@ -203,20 +214,67 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 	}
 
 	createChoiceWindow() {
-		this.scene.yesNoChoice = 'yes';
+		this.scene.choiceIsOn = true;
+		if (!this.scene.yesNoChoice) this.scene.yesNoChoice = 'yes';
+		this.yesNoGraphics = this.scene.add.graphics();
 		this.yesDimension = this.calculateWindowDimensions(this.getGameWidth(), this.getGameHeight(), true);
 		this.noDimension = this.calculateWindowDimensions(this.getGameWidth(), this.getGameHeight() + 35, true);
 
-		this.createOuterWindow(this.yesDimension);
-		this.createInnerWindow(this.yesDimension);
-		this.createInnerWindow(this.noDimension);
+		let x = this.padding + 10 - this.getCameraX() + 390;
+		let y = this.getGameHeight() - this.windowHeight - this.padding - this.getCameraY() - 70;
+
+		this.yesText = this.scene.make.text({
+			x,
+			y,
+			text: 'YES',
+			style: {
+				wordWrap: {
+					width: this.getGameWidth() - this.padding * 2 - 25,
+				},
+			},
+		});
+
+		this.noText = this.scene.make.text({
+			x: (x += 6),
+			y: (y += 35),
+			text: 'NO',
+			style: {
+				wordWrap: {
+					width: this.getGameWidth() - this.padding * 2 - 25,
+				},
+			},
+		});
+
+		if (this.scene.yesNoChoice === 'yes') {
+			this.createOuterWindow(this.yesDimension, true);
+		} else if (this.scene.yesNoChoice === 'no') {
+			this.createOuterWindow(this.noDimension, true);
+		} else {
+			console.log('Uh oh, this is not supposed to happen');
+		}
+
+		this.createInnerWindow(this.yesDimension, true);
+		this.createInnerWindow(this.noDimension, true);
 	}
 
 	toggleChoice() {
 		if (this.scene.yesNoChoice === 'yes') {
 			this.scene.yesNoChoice = 'no';
-			this.createOuterWindow;
+		} else if (this.scene.yesNoChoice === 'no') {
+			this.scene.yesNoChoice = 'yes';
+		} else {
+			console.log('This is not supposed to happen');
 		}
+		this.closeChoiceWindow();
+		this.createChoiceWindow();
+	}
+
+	closeChoiceWindow() {
+		this.scene.choiceIsOn = false;
+		this.yesText.destroy();
+		this.noText.destroy();
+		if (this.yesNoGraphics) this.yesNoGraphics.destroy();
+		if (this.timedEvent) this.timedEvent.remove();
 	}
 
 	// Creates the dialogue window
@@ -225,7 +283,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		const gameHeight = this.getGameHeight();
 		const gameWidth = this.getGameWidth();
 		const dimensions = this.calculateWindowDimensions(gameWidth, gameHeight);
-		this.graphics = this.scene.add.graphics();
+		this.dialogueGraphics = this.scene.add.graphics();
 
 		this.createOuterWindow(dimensions);
 		this.createInnerWindow(dimensions);

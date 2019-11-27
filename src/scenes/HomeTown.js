@@ -274,9 +274,17 @@ class HomeTown extends Phaser.Scene {
 		 *            Controls
 		 ***********************************/
 
-		if (this.cursors.up.isDown) {
-		}
 		this.input.addPointer(2);
+		this.cursors.down.on('down', () => {
+			if (this.choiceIsOn) {
+				dialoguePlugin.toggleChoice();
+			}
+		});
+		this.cursors.up.on('down', () => {
+			if (this.choiceIsOn) {
+				dialoguePlugin.toggleChoice();
+			}
+		});
 
 		if (this.isMobile) {
 			const virtualJoyStick = new virtualJoyStickPlugin(this, {
@@ -326,7 +334,6 @@ class HomeTown extends Phaser.Scene {
 				this.player.isRunning = false;
 			});
 		}
-		dialoguePlugin.createChoiceWindow();
 	}
 
 	actionButton() {
@@ -342,6 +349,10 @@ class HomeTown extends Phaser.Scene {
 			}
 		} else {
 			this.dialogueModal.keydownXHandler();
+		}
+
+		if (this.dialogueIsPlaying && this.choiceIsOn) {
+			this.dialogueModal.closeChoiceWindow();
 		}
 	}
 
