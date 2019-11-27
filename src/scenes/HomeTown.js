@@ -262,16 +262,6 @@ class HomeTown extends Phaser.Scene {
 		 ***********************************/
 
 		this.input.addPointer(2);
-		this.cursors.down.on('down', () => {
-			if (this.choiceIsOn) {
-				dialoguePlugin.toggleChoice();
-			}
-		});
-		this.cursors.up.on('down', () => {
-			if (this.choiceIsOn) {
-				dialoguePlugin.toggleChoice();
-			}
-		});
 
 		if (this.isMobile) {
 			const virtualJoyStick = new virtualJoyStickPlugin(this, {
@@ -305,6 +295,16 @@ class HomeTown extends Phaser.Scene {
 				this.player.speed = playerData.speed;
 			});
 		} else {
+			this.cursors.down.on('down', () => {
+				if (this.choiceIsOn) {
+					dialoguePlugin.toggleChoice();
+				}
+			});
+			this.cursors.up.on('down', () => {
+				if (this.choiceIsOn) {
+					dialoguePlugin.toggleChoice();
+				}
+			});
 			// Action Button
 			this.input.keyboard.on('keydown_X', () => {
 				this.actionButton();
