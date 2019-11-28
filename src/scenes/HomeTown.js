@@ -18,6 +18,8 @@ import bButtonSprite from '../assets/b-button.png';
 // Audio files
 import textBlipOgg from '../assets/blip.ogg';
 import textBlipMp3 from '../assets/blip.mp3';
+import homeTownOgg from '../assets/hometown.ogg';
+import homeTownMp3 from '../assets/hometown.mp3';
 
 // Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
@@ -65,6 +67,7 @@ class HomeTown extends Phaser.Scene {
 
 		// Audio
 		this.load.audio('textBlip', [textBlipOgg, textBlipMp3]);
+		this.load.audio('hometown', [homeTownOgg, homeTownMp3]);
 
 		// Plugins
 		this.load.scenePlugin('dialogueModal', dialogueModalPlugin);
@@ -90,6 +93,8 @@ class HomeTown extends Phaser.Scene {
 			Down: [0, 1, 2, 1],
 		};
 		const textBlip = this.sound.add('textBlip');
+		const hometownMusic = this.sound.add('hometown');
+		hometownMusic.play({ loop: true, volume: 0.5 });
 
 		/**********************************
 		 *             Plugin
@@ -188,7 +193,9 @@ class HomeTown extends Phaser.Scene {
 		const marthaIndex = movementPlugin.createCharacter(marthaData);
 
 		this.NPCs[marthaIndex].dialogue = [
-			"I'M FAST AS FUCK BOIIIIIIIIIIIIIIII",
+			'I',
+			'AM',
+			'SPEEEEEEEEEEEEEEEEEEEEEEEEEED',
 			"I'm Martha. Most of the character sprites are from different artists.",
 			"My pixels were put together by 'kitterlings'.",
 			"You can find my artist on Instagram @ 'kitterlings' as well on 'kitterlings.itch.io'",
@@ -197,9 +204,9 @@ class HomeTown extends Phaser.Scene {
 		this.NPCs[emiIndex].dialogue = [
 			"Oh! Hi there! I'm Emi.",
 			"We just got virtual buttons for mobile devices! I see you're already using them. If you have any problems with this game on your device, let my creator know.",
-			'The latest update was on Tuesday, November 26th, 2019 at 9:00 PM',
+			'The latest update was on Wednesday, November 27th, 2019 at 9:00 PM',
 			'In this updated version, initial set up has been created for making different choices in dialogue.',
-			'Hopefully that gets completed soon so you and I can have dynamic conversations.',
+			'We also just got some music. Now this place is a bit livelier than usual.',
 			'Because of recent developments, the ability to skip dialogue with your B button has been removed.',
 			'In the upcomming updates, you will be able to enter the buildings in this map.',
 			'That concludes the latest updates, I hope you are excited for the finished game as much as I am!',
