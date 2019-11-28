@@ -188,7 +188,7 @@ class HomeTown extends Phaser.Scene {
 				y: 300,
 				initialFrame: 1,
 			},
-			speed: 200,
+			speed: 400,
 		};
 		const marthaIndex = movementPlugin.createCharacter(marthaData);
 
