@@ -14,6 +14,11 @@ import actionBox from '../assets/playerActionBox.png';
 import playerAura from '../assets/playerAura.png';
 import aButtonSprite from '../assets/a-button.png';
 import bButtonSprite from '../assets/b-button.png';
+
+// Audio files
+import textBlipOgg from '../assets/blip.ogg';
+import textBlipMp3 from '../assets/blip.mp3';
+
 // Plugins
 import dialogueModalPlugin from '../plugins/DialogueModal';
 import characterMovementPlugin from '../plugins/CharacterMovement';
@@ -45,19 +50,28 @@ class HomeTown extends Phaser.Scene {
 		this.load.image('world', worldTileset);
 
 		this.load.tilemapTiledJSON('map', tilemapJSONFile);
+
+		// spritesheets
 		this.load.spritesheet('player', playerSpritesheetFile, this.characterSpriteConfig);
 		this.load.spritesheet('lumberjack', lumberjackSpritesheetFile, this.characterSpriteConfig);
 		this.load.spritesheet('emi', emiSpritesheetFile, this.characterSpriteConfig);
 		this.load.spritesheet('martha', marthaSpriteSheetFile, this.characterSpriteConfig);
 		this.load.spritesheet('inFrontBlock', actionBox, this.utilitySpriteConfig);
 		this.load.spritesheet('playerAura', playerAura, this.utilitySpriteConfig);
+
+		// Mobile button images
 		this.load.image('aButton', aButtonSprite);
 		this.load.image('bButton', bButtonSprite);
+
+		// Audio
+		this.load.audio('textBlip', [textBlipOgg, textBlipMp3]);
+
 		// Plugins
 		this.load.scenePlugin('dialogueModal', dialogueModalPlugin);
 		this.load.scenePlugin('characterMovement', characterMovementPlugin);
 		this.load.scenePlugin('playerRange', playerRangePlugin);
 
+		// Determines if device is a desktop or not
 		if (this.sys.game.device.os.desktop) {
 			this.isMobile = false;
 		} else {
@@ -75,6 +89,7 @@ class HomeTown extends Phaser.Scene {
 			Up: [9, 10, 11, 10],
 			Down: [0, 1, 2, 1],
 		};
+		const textBlip = this.sound.add('textBlip');
 
 		/**********************************
 		 *             Plugin
@@ -83,7 +98,7 @@ class HomeTown extends Phaser.Scene {
 		const rangePlugin = this.playerRange;
 		const movementPlugin = this.characterMovement;
 
-		dialoguePlugin.init();
+		dialoguePlugin.init({ textBlip: textBlip });
 
 		/**********************************
 		 *               Map
@@ -168,7 +183,7 @@ class HomeTown extends Phaser.Scene {
 				y: 300,
 				initialFrame: 1,
 			},
-			speed: 150,
+			speed: 200,
 		};
 		const marthaIndex = movementPlugin.createCharacter(marthaData);
 
@@ -298,7 +313,7 @@ class HomeTown extends Phaser.Scene {
 		} else {
 			// Action Button
 			this.input.keyboard.on('keydown_X', () => {
-				this.actionButton();
+				this.actionButton(textBlip);
 			});
 			this.input.keyboard.on('keydown_Z', () => {
 				this.cancelButton();
@@ -324,7 +339,7 @@ class HomeTown extends Phaser.Scene {
 		});
 	}
 
-	actionButton() {
+	actionButton(sound) {
 		// if dialogue is NOT Playing
 		// HomeTown.dialogueIsPlaying is initiated in DialogueModal.js (the DialogueModal plugin)
 		if (!this.dialogueIsPlaying && !this.cursors.active) {

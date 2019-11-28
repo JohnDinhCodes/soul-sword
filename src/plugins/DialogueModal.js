@@ -19,6 +19,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		padding,
 		closeBtnColor,
 		dialogueSpeed,
+		textBlip,
 	} = {}) {
 		// set properties from options object or use defaults
 		this.borderThickness = borderThickness || 3;
@@ -30,6 +31,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 		this.padding = padding || 0;
 		this.closeBtnColor = closeBtnColor || 'darkgoldenrod';
 		this.dialogueSpeed = dialogueSpeed || 4;
+		this.textBlip = textBlip || undefined;
 
 		// used for animating the text
 		this.eventCounter = 0;
@@ -206,6 +208,7 @@ class DialogueModal extends Phaser.Plugins.ScenePlugin {
 
 	// Slowly displays the text in the window to make it appear annimated
 	animateText() {
+		this.textBlip.play();
 		this.eventCounter++;
 		this.text.setText(this.text.text + this.dialogue[this.eventCounter - 1]);
 		if (this.eventCounter === this.dialogue.length) {
