@@ -244,7 +244,7 @@ class HomeTown extends Phaser.Scene {
 		this.NPCs[emiIndex].dialogue = [
 			"Oh! Hi there! I'm Emi.",
 			"We just got virtual buttons for mobile devices! I see you're already using them. If you have any problems with this game on your device, let my creator know.",
-			"The latest update was on Wednesday, December 13th, 2019 at 5:00 PM",
+			"The latest update was on Friday, December 13th, 2019 at 5:00 PM",
 			"Our creator just survived finals week! Now he can work on this game more often during winter break.",
 			"We also just got some music. Now this place is a bit livelier than usual.",
 			"Because of recent developments, the ability to skip dialogue with your B button has been removed.",
